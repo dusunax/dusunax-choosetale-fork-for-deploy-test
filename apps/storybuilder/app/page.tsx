@@ -1,8 +1,6 @@
 import { Card } from "@repo/ui/card";
 
 export default function Page(): JSX.Element {
-  console.log(Card);
-
   return (
     <main className="flex flex-col items-center justify-between min-h-screen p-24">
       <Card title="" href="">
