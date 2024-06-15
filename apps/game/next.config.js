@@ -2,8 +2,13 @@
 const nextConfig = {
   reactStrictMode: true,
   transpilePackages: ["@repo/ui"],
+  basePath: "/game",
   async rewrites() {
     return [
+      {
+        source: "/",
+        destination: "/game",
+      },
       {
         source: "/story",
         destination: "https://choosetale-storybuilder.vercel.app",
