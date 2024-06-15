@@ -2,7 +2,6 @@
 const nextConfig = {
   reactStrictMode: true,
   transpilePackages: ["@repo/ui"],
-  basePath: "/story",
   async rewrites() {
     return [
       {
