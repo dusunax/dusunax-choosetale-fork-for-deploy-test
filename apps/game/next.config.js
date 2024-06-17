@@ -2,6 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   transpilePackages: ["@repo/ui"],
+  assetPrefix: "https://choosetale-game.vercel.app",
   async rewrites() {
     return [
       {
