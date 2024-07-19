@@ -7,6 +7,7 @@ import { useGameStore } from "@/store/gameStore";
 import { createGame } from "@/actions/createGame";
 import NextButton from "@components/button/SubmitButton";
 import GameCreateFields from "@/components/game/create/form/GameCreateFields";
+import { ExtendsPageType } from "@/interface/page";
 
 export default function CreateGame() {
   const router = useRouter();
@@ -17,13 +18,18 @@ export default function CreateGame() {
 
   const onSubmit: SubmitHandler<CreateGameReqDto> = async (data) => {
     const res = await createGame(data);
-    if (res.success) {
-      router.push("/game/builder?id=" + (res.game.page.id ?? ""));
-      setGameInitData(res.game);
-    }
 
-    if (!res.success) {
-      alert("게임 생성 실패");
+    try {
+      if (!res.success) throw new Error("게임 생성 실패");
+      const gameId = res.gameInitData.id;
+      if (!gameId) throw new Error("게임 생성 실패");
+
+      router.push(`/game/builder/${gameId}`);
+      setGameInitData(res.gameInitData as ExtendsPageType);
+    } catch (err) {
+      if (err instanceof Error) {
+        alert(err.message);
+      }
     }
   };
 
