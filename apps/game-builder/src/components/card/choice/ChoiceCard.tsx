@@ -1,7 +1,13 @@
 "use client";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { CheckIcon, Cross2Icon, Link2Icon } from "@radix-ui/react-icons";
+import {
+  CheckIcon,
+  Cross2Icon,
+  Link2Icon,
+  LockOpen2Icon,
+  TrashIcon,
+} from "@radix-ui/react-icons";
 import { CardContent, CardFooter } from "@repo/ui/components/ui/Card.tsx";
 import ThemedCard from "@themed/ThemedCard";
 import ThemedIconButton from "@themed/ThemedIconButton";
@@ -32,6 +38,7 @@ export default function ChoiceCard({
   linkedPage,
 }: PageCardProps) {
   const [isFixed, setIsFixed] = useState(defaultFixed);
+  const isSavedChoice = defaultFixed === true;
 
   const defaultValues = {
     ...choice,
@@ -43,6 +50,7 @@ export default function ChoiceCard({
     handleSubmit,
     getValues,
     formState: { errors },
+    reset,
   } = useForm({ defaultValues });
 
   const onSubmit = (formData: typeof defaultValues) => {
@@ -55,15 +63,23 @@ export default function ChoiceCard({
     setIsFixed(!isFixed);
   };
 
-  const clickRemove = () => {
-    removeChoice();
+  const handleRemove = () => {
+    if (confirm("선택지를 삭제 하시겠습니까?")) removeChoice();
+  };
+  const handleEdit = () => {
+    setIsFixed(false);
+  };
+  const handleCancel = () => {
+    setIsFixed(true);
+    reset(choice);
   };
 
   if (isFixed) {
     return (
       <StaticChoice
         {...getValues()}
-        removeChoice={clickRemove}
+        removeChoice={handleRemove}
+        editChoice={handleEdit}
         linkedPage={linkedPage}
       />
     );
@@ -75,7 +91,7 @@ export default function ChoiceCard({
         <DotIndicator isChoosen={isFixed} linkedPage={linkedPage} />
 
         <div className="flex-1">
-          <CardContent className="p-4 sm:p-6 h-full flex flex-col justify-center">
+          <CardContent className="py-2 !pb-3 px-4 sm:p-6 h-full flex flex-col justify-center">
             <ThemedInputField
               placeholder="선택지 제목"
               labelText=""
@@ -106,14 +122,31 @@ export default function ChoiceCard({
           </CardContent>
         </div>
 
-        <CardFooter className="flex items-center p-0 pr-4 pt-2 gap-1">
-          {!isFixed && (
-            <ThemedIconButton type="submit">
-              <CheckIcon className="h-8 w-8" />
+        <CardFooter className="flex flex-col justify-end items-center p-0 pr-4 py-4 gap-2">
+          {isSavedChoice && (
+            <ThemedIconButton
+              type="submit"
+              className="!absolute top-1 right-1 min-w-6 p-0 min-h-0 px-2 py-[2px]"
+            >
+              <LockOpen2Icon className="h-4 w-4" />
             </ThemedIconButton>
           )}
-          <ThemedIconButton onClick={clickRemove}>
-            <Cross2Icon className="h-8 w-8" />
+          {!isSavedChoice && (
+            <ThemedIconButton
+              type="submit"
+              className="!absolute top-1 right-1 min-w-6 p-0 min-h-0 px-2 py-[2px]"
+            >
+              <CheckIcon className="h-6 w-6" />
+            </ThemedIconButton>
+          )}
+          {isSavedChoice && (
+            <ThemedIconButton onClick={handleCancel}>
+              <Cross2Icon className="h-6 w-6" />
+            </ThemedIconButton>
+          )}
+
+          <ThemedIconButton onClick={handleRemove}>
+            <TrashIcon className="h-5 w-5 m-[1px]" />
           </ThemedIconButton>
         </CardFooter>
       </ThemedCard>
