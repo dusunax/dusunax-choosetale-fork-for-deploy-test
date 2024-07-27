@@ -16,7 +16,7 @@ const setGameWithSource = (
   const pagesWithTag = gameData.pages.map((page) => {
     const choicesWithTag = page.choices.map((choice) => ({
       ...choice,
-      // source,
+      source,
     })) as ChoiceType[];
 
     return {
