@@ -3,12 +3,14 @@ import type { useForm } from "react-hook-form";
 import type { GameInfo } from "@/interface/customType";
 import { uploadThumbnail } from "@/actions/thumbnail/uploadThumbnail";
 import { deleteThumbnail } from "@/actions/thumbnail/deleteThumbnail";
+import { generateThumbnail } from "@/actions/thumbnail/generateThumbnail";
 
-export default function UseThumbnail({
+export default function useThumbnail({
   ...useFormProps
 }: ReturnType<typeof useForm<GameInfo>>) {
-  const { watch, setValue, getValues } = useFormProps;
+  const { setValue, getValues } = useFormProps;
   const [currentThumbnailIdx, setCurrentThumbnailIdx] = useState(0);
+  const [isGenerating, setIsGenerating] = useState(false);
 
   // 이미지 업로드
   const handleUpload = useCallback(
@@ -20,30 +22,38 @@ export default function UseThumbnail({
 
       const response = await uploadThumbnail(gameId, formData);
       if (response.success) {
-        const currentThumbnails = watch("thumbnails") || [];
+        const currentThumbnails = getValues("thumbnails") || [];
         setValue("thumbnails", [
           ...currentThumbnails,
           ...response.uploadedThumbnail,
         ]);
-        return true;
+
+        setTimeout(() => {
+          setCurrentThumbnailIdx(getValues("thumbnails").length + 1);
+        }, 500);
       }
     },
-    [watch, setValue]
+    [getValues, setValue]
   );
 
   // AI 이미지 생성 요청 핸들러
   const handleGenerate = useCallback(
     async (gameId: number) => {
-      // const response = await generateThumbnail(gameId);
-      // if (response.success) {
-      //   const currentThumbnails = watch("thumbnails") || [];
-      //   // FIXME: url과 id 함께 받도록 api 변경 예정
-      //   const newThumbnail = { id: -1, url: response.generatedThumbnailUrl };
-      //   console.log(newThumbnail);
-      //   setValue("thumbnails", [...currentThumbnails, newThumbnail]);
-      // }
+      setIsGenerating(true);
+      const response = await generateThumbnail(gameId);
+
+      if (response.success) {
+        const currentThumbnails = getValues("thumbnails") || [];
+        const { imageId, url } = response.generatedThumbnail;
+        setValue("thumbnails", [...currentThumbnails, { id: imageId, url }]);
+
+        setTimeout(() => {
+          setIsGenerating(false);
+          setCurrentThumbnailIdx(getValues("thumbnails").length + 1);
+        }, 500);
+      }
     },
-    [watch, setValue]
+    [setValue, getValues]
   );
 
   // 썸네일 이미지 삭제 핸들러
@@ -53,14 +63,14 @@ export default function UseThumbnail({
       const response = await deleteThumbnail(gameId, imageId);
 
       if (response.success) {
-        const currentThumbnails = watch("thumbnails") || [];
+        const currentThumbnails = getValues("thumbnails") || [];
         const updatedThumbnails = currentThumbnails.filter(
           (_, i) => i !== index
         );
         setValue("thumbnails", updatedThumbnails);
       }
     },
-    [watch, getValues, setValue]
+    [getValues, setValue]
   );
 
   return {
@@ -69,5 +79,6 @@ export default function UseThumbnail({
     handleDelete,
     currentThumbnailIdx,
     setCurrentThumbnailIdx,
+    isGenerating,
   };
 }

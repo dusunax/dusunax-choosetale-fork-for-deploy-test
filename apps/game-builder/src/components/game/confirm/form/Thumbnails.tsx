@@ -21,6 +21,7 @@ export default function Thumbnails({
     handleDelete,
     currentThumbnailIdx,
     setCurrentThumbnailIdx,
+    isGenerating,
   } = useThumbnails(useFormProps);
   const gameId = Number(getValues("id"));
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -30,20 +31,15 @@ export default function Thumbnails({
     fileInputRef.current && fileInputRef.current.click();
   };
 
-  const onFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files && files.length > 0) {
-      const result = await handleUpload(gameId, files);
-      if (result) {
-        setTimeout(() => {
-          setCurrentThumbnailIdx(getValues("thumbnails").length + 1);
-        }, 500);
-      }
+      handleUpload(gameId, files);
     }
   };
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 select-none">
       <ThemedLabel htmlFor="" labelText="썸네일" />
       <ThemedCard className="flex-col !py-4 gap-4">
         {thumbnailExists && (
@@ -54,7 +50,13 @@ export default function Thumbnails({
           />
         )}
 
-        <div className="flex justify-center gap-1">
+        <div
+          className={`flex justify-center gap-1 ${
+            isGenerating
+              ? "pointer-events-none cursor-default animate-pulse duration-1000"
+              : ""
+          }`}
+        >
           {/* 썸네일 이미지 업로드 */}
           <ThemedIconButton onClick={onUploadButtonClick}>
             <ImageIcon className="h-5 w-5 m-1" />
@@ -67,7 +69,14 @@ export default function Thumbnails({
           </ThemedIconButton>
 
           {/* AI 이미지 생성 요청 */}
-          <ThemedIconButton onClick={() => handleGenerate(gameId)}>
+          <ThemedIconButton
+            onClick={() => handleGenerate(gameId)}
+            className={
+              isGenerating
+                ? "animate-bounce"
+                : "hover:-translate-y-2 transition-transform"
+            }
+          >
             <Image
               className="h-5 w-5 m-1 -translate-y-[2px]"
               src={robotIcon}
