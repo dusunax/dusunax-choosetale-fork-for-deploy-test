@@ -8,6 +8,7 @@ import type {
   GameBuildType,
   PageType,
 } from "@/interface/customType";
+import { createPage } from "@/actions/page/createPage";
 
 const tempIsEnding = false;
 
@@ -100,22 +101,31 @@ export default function useGameData({
     if (toPageId !== undefined) deletePageData(toPageId);
   };
 
-  const addPageData = ({ depth }: { depth: number }) => {
-    // FIXME: api 요청하도록 변경 필요
-    const newPageId = gamePageList.length + 1;
-    const newPage: PageType = {
-      id: newPageId,
-      title: "",
-      abridgement: "",
-      description: "",
-      createdAt: new Date().toISOString(),
-      depth,
-      choices: [],
-      source: "client",
-      isEnding: false,
-    };
+  const addPageData = async ({
+    depth,
+    pageData,
+  }: {
+    depth: number;
+    pageData: { content: string; isEnding: boolean };
+  }) => {
+    const res = await createPage(gameBuildData.id, pageData);
 
-    setGamePageList((prevData: PageType[]) => [...prevData, newPage]);
+    if (res.success) {
+      const newPage: PageType = {
+        abridgement: "",
+        choices: [],
+        createdAt: new Date().toISOString(),
+        depth,
+        description: pageData.content,
+        id: res.page.id,
+        isEnding: pageData.isEnding,
+        source: "client",
+        updatedAt: new Date().toISOString(),
+      };
+
+      setGamePageList((prevData: PageType[]) => [...prevData, newPage]);
+      return { id: res.page.id };
+    }
   };
 
   const updatePageData = (updatedPage: Partial<PageType>) => {

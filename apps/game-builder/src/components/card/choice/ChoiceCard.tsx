@@ -6,6 +6,7 @@ import {
   Cross2Icon,
   Link2Icon,
   LockOpen2Icon,
+  PlusCircledIcon,
   TrashIcon,
 } from "@radix-ui/react-icons";
 import { CardContent, CardFooter } from "@repo/ui/components/ui/Card.tsx";
@@ -14,6 +15,7 @@ import ThemedCard from "@themed/ThemedCard";
 import ThemedIconButton from "@themed/ThemedIconButton";
 import ThemedInputField from "@/components/theme/ui/ThemedInputField";
 import ThemedTextareaField from "@/components/theme/ui/ThemedTextareaField";
+import NewPage from "@/components/game/builder/newPage/NewPage";
 import DotIndicator from "./DotIndicator";
 import { StaticChoice } from "./StaticChoice";
 
@@ -24,6 +26,7 @@ interface PageCardProps {
   removeChoice: () => void;
   availablePages: LinkedPage[];
   linkedPage: LinkedPage | undefined;
+  handleNewPage: (newPageData: { content: string; isEnding: boolean }) => void;
 }
 
 export default function ChoiceCard({
@@ -33,6 +36,7 @@ export default function ChoiceCard({
   removeChoice,
   availablePages,
   linkedPage,
+  handleNewPage,
 }: PageCardProps) {
   const [isFixed, setIsFixed] = useState(defaultFixed);
   const isSavedChoice = defaultFixed;
@@ -109,11 +113,13 @@ export default function ChoiceCard({
                 {...register("toPageId", { required: true })}
                 className={`p-2 shadow-sm border rounded-sm text-xs w-full ${errors.toPageId ? "border-red-500" : ""}`}
               >
-                {availablePages.map((page) => (
-                  <option key={page.pageId} value={page.pageId}>
-                    {page.title}
-                  </option>
-                ))}
+                {availablePages
+                  .filter((page) => page.pageId !== choice.fromPageId)
+                  .map((page) => (
+                    <option key={page.pageId} value={page.pageId}>
+                      {page.content.slice(0, 50)}
+                    </option>
+                  ))}
               </select>
             </div>
           </CardContent>
@@ -141,6 +147,10 @@ export default function ChoiceCard({
               <Cross2Icon className="h-6 w-6" />
             </ThemedIconButton>
           )}
+
+          <NewPage handleNewPage={handleNewPage}>
+            <PlusCircledIcon className="h-5 w-5 m-[1px] cursor-pointer" />
+          </NewPage>
 
           <ThemedIconButton onClick={handleRemove}>
             <TrashIcon className="h-5 w-5 m-[1px]" />
