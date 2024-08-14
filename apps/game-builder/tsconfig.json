@@ -9,7 +9,8 @@
       "@api/*": ["./src/actions/*"],
       "@store/*": ["./src/store/*"],
       "@themed/*": ["./src/components/theme/ui/*"],
-      "@asset/*": ["./src/asset/*"]
+      "@asset/*": ["./src/asset/*"],
+      "@repo/ui/*": ["../../packages/ui/src/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
