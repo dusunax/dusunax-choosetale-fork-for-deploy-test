@@ -6,11 +6,15 @@ import type {
   ChoiceType,
   GameBuild,
   GameBuildType,
+  NewChoice,
   PageType,
 } from "@/interface/customType";
 import { createPage } from "@/actions/page/createPage";
-
-const tempIsEnding = false;
+import { updatePage } from "@/actions/page/updatePage";
+import { deletePage } from "@/actions/page/deletePage";
+import { createChoice } from "@/actions/choice/createChoice";
+import { updateChoice } from "@/actions/choice/updateChoice";
+import { deleteChoice } from "@/actions/choice/deleteChoice";
 
 const setGameWithSource = (
   gameData: GameBuild,
@@ -26,7 +30,6 @@ const setGameWithSource = (
       ...page,
       choices: choicesWithTag,
       source,
-      isEnding: tempIsEnding,
     } as PageType;
   });
 
@@ -52,54 +55,6 @@ export default function useGameData({
   const [gamePageList, setGamePageList] = useState(
     newGame?.pages ?? game.pages
   );
-
-  const updateChoicesData = (pageId: number, updatedChoice: ChoiceType) => {
-    setGamePageList((prevData: PageType[]) =>
-      prevData.map((page) =>
-        page.id === pageId
-          ? {
-              ...page,
-              choices: page.choices.map((choice) =>
-                choice.id === updatedChoice.id ? updatedChoice : choice
-              ),
-            }
-          : page
-      )
-    );
-  };
-
-  const addChoiceData = (pageId: number, choice: ChoiceType) => {
-    setGamePageList((prevData: PageType[]) =>
-      prevData.map((page) =>
-        page.id === pageId
-          ? { ...page, choices: [...page.choices, choice] }
-          : page
-      )
-    );
-  };
-
-  const deleteChoiceData = (pageId: number, choiceId: number) => {
-    let toPageId: number | undefined;
-
-    setGamePageList((prevData) =>
-      prevData.map((page) => {
-        if (page.id === pageId) {
-          const updatedChoices = page.choices.filter((choice) => {
-            if (choice.id === choiceId) {
-              toPageId = choice.toPageId;
-              return false;
-            }
-            return true;
-          });
-
-          return { ...page, choices: updatedChoices };
-        }
-        return page;
-      })
-    );
-
-    if (toPageId !== undefined) deletePageData(toPageId);
-  };
 
   const addPageData = async ({
     depth,
@@ -128,29 +83,119 @@ export default function useGameData({
     }
   };
 
-  const updatePageData = (updatedPage: Partial<PageType>) => {
-    setGamePageList((prevData) =>
-      prevData.map((page) =>
-        page.id === updatedPage.id ? { ...page, ...updatedPage } : page
-      )
-    );
-  };
+  const updatePageData = async (pageId: number, updatedPage: PageType) => {
+    const { abridgement, description, isEnding } = updatedPage;
+    if (!abridgement || !description || isEnding === undefined) return;
 
-  const deletePageData = (pageId: number) => {
-    setGamePageList((prevData) => {
-      const filteredPages = prevData.filter((page) => page.id !== pageId);
-
-      return filteredPages.map((page) => ({
-        ...page,
-        choices: page.choices.filter(
-          (choice: ChoiceType) => choice.toPageId !== pageId
-        ),
-      }));
+    const res = await updatePage(gameBuildData.id, pageId, {
+      abridgement,
+      content: description,
+      isEnding,
     });
+
+    if (res.success) {
+      setGamePageList((prevData) =>
+        prevData.map((page) =>
+          page.id === updatedPage.id ? { ...page, ...updatedPage } : page
+        )
+      );
+    }
   };
 
-  const switchPageIsEnding = (partialPage: Partial<PageType>) => {
-    updatePageData(partialPage);
+  const deletePageData = async (pageId: number) => {
+    const result = await deletePage(gameBuildData.id, pageId);
+
+    if (result.success) {
+      setGamePageList((prevData) => {
+        const filteredPages = prevData.filter((page) => page.id !== pageId);
+
+        return filteredPages.map((page) => ({
+          ...page,
+          choices: page.choices.filter(
+            (choice: ChoiceType) => choice.toPageId !== pageId
+          ),
+        }));
+      });
+    }
+  };
+
+  const addChoiceData = async (pageId: number, choice: NewChoice) => {
+    const result = await createChoice(gameBuildData.id, choice);
+
+    if (result.success) {
+      const newChoice: ChoiceType = {
+        ...choice,
+        source: "server",
+        fromPageId: choice.parentPageId,
+        toPageId: choice.childPageId,
+        id: result.choice.id,
+        createdAt: new Date().toISOString(),
+      };
+      setGamePageList((prevData: PageType[]) =>
+        prevData.map((page) =>
+          page.id === pageId
+            ? {
+                ...page,
+                choices: [...page.choices, newChoice],
+              }
+            : page
+        )
+      );
+    }
+    return result.success;
+  };
+
+  const updateChoicesData = async (
+    pageId: number,
+    choiceId: number,
+    choiceData: NewChoice
+  ) => {
+    const result = await updateChoice(gameBuildData.id, choiceId, choiceData);
+
+    if (result.success) {
+      const newChoice: ChoiceType = {
+        ...choiceData,
+        source: "server",
+        fromPageId: choiceData.parentPageId,
+        toPageId: choiceData.childPageId,
+        id: result.choice.id,
+        createdAt: new Date().toISOString(),
+      };
+      setGamePageList((prevData: PageType[]) =>
+        prevData.map((page) =>
+          page.id === pageId
+            ? {
+                ...page,
+                choices: page.choices.map((choice) =>
+                  choice.id === newChoice.id ? newChoice : choice
+                ),
+              }
+            : page
+        )
+      );
+    }
+  };
+
+  const deleteChoiceData = async (pageId: number, choiceId: number) => {
+    const result = await deleteChoice(gameBuildData.id, choiceId);
+
+    if (result.success) {
+      setGamePageList((prevData) =>
+        prevData.map((page) => {
+          if (page.id === pageId) {
+            const updatedChoices = page.choices.filter((choice) => {
+              if (choice.id === choiceId) {
+                return false;
+              }
+              return true;
+            });
+
+            return { ...page, choices: updatedChoices };
+          }
+          return page;
+        })
+      );
+    }
   };
 
   return {
@@ -161,6 +206,5 @@ export default function useGameData({
     addChoiceData,
     updateChoicesData,
     deleteChoiceData,
-    switchPageIsEnding,
   };
 }

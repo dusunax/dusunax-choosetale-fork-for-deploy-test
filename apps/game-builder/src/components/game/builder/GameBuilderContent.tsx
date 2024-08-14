@@ -2,7 +2,7 @@
 import { PlusCircledIcon } from "@radix-ui/react-icons";
 import useChoices from "@/hooks/useChoices";
 import type useGameData from "@/hooks/useGameData";
-import type { ChoiceType } from "@/interface/customType";
+import type { ChoiceType, NewChoice, PageType } from "@/interface/customType";
 import ChoiceCard from "@/components/card/choice/ChoiceCard";
 import PageCard from "@components/card/page/PageCard";
 import GameSubmitButton from "@/components/button/GameSubmitButton";
@@ -20,18 +20,18 @@ export default function GameBuilderContent({
 }: GameBuilderContentProps) {
   const {
     gamePageList,
-    deleteChoiceData,
     addPageData,
     updatePageData,
+    addChoiceData,
     updateChoicesData,
+    deleteChoiceData,
     deletePageData,
   } = useGameDataProps;
   const {
-    unFixedChoicesMap: choicesMap,
-    addChoice,
-    removeChoice,
-    addAiChoice,
-    updateChoice,
+    unFixedChoicesMap,
+    addUnFixedChoice,
+    removeUnFixedChoice,
+    genAiChoice,
     isGenerating,
   } = useChoices({
     gamePageList,
@@ -43,19 +43,33 @@ export default function GameBuilderContent({
   }) => {
     addPageData({ depth: -1, pageData: newPageData });
   };
+  const handleUpdatePage = async (pageId: number, updatedPage: PageType) => {
+    await updatePageData(pageId, updatedPage);
+  };
   const handleAddChoiceByUser = (pageId: number) => {
-    addChoice(pageId);
+    addUnFixedChoice(pageId);
   };
-  const handleAddChoiceByAI = (pageId: number) => {
-    addAiChoice({ gameId, pageId });
+  const handleGenChoiceByAI = (pageId: number) => {
+    genAiChoice({ gameId, pageId });
   };
-  const handleFixChoice = (pageId: number, choice: ChoiceType) => {
-    updateChoice(pageId, choice);
-    updateChoicesData(pageId, choice);
+  const handleFixChoice = async (pageId: number, choice: ChoiceType) => {
+    const payload: NewChoice = {
+      parentPageId: choice.fromPageId,
+      childPageId: choice.toPageId,
+      title: choice.title,
+      description: choice.description,
+    };
+    if (choice.source === "client") {
+      const success = await addChoiceData(pageId, payload);
+      if (success) removeUnFixedChoice(pageId, choice.id);
+    }
+    if (choice.source === "server") {
+      updateChoicesData(gameId, choice.id, payload);
+    }
   };
   const handleDeleteChoice = (pageId: number, choice: ChoiceType) => {
-    removeChoice(pageId, choice.id);
-    deleteChoiceData(pageId, choice.id);
+    if (choice.source === "client") removeUnFixedChoice(pageId, choice.id);
+    if (choice.source === "server") deleteChoiceData(pageId, choice.id);
   };
   const handleDeletePage = (pageId: number) => {
     if (confirm("페이지를 삭제하면 페이지의 선택지가 함께 삭제됩니다."))
@@ -85,7 +99,7 @@ export default function GameBuilderContent({
 
         <UnLinkedPages
           gamePageList={gamePageList}
-          updatePage={updatePageData}
+          updatePage={handleUpdatePage}
           handleDeletePage={handleDeletePage}
         />
       </div>
@@ -102,7 +116,7 @@ export default function GameBuilderContent({
             .map((page) => {
               if (page.depth < 0) return;
               const choices = page.choices as ChoiceType[];
-              const unFixedChoice = choicesMap.get(page.id) as
+              const unFixedChoice = unFixedChoicesMap.get(page.id) as
                 | ChoiceType[]
                 | undefined;
               const combinedChoices = [...choices, ...(unFixedChoice ?? [])];
@@ -115,27 +129,31 @@ export default function GameBuilderContent({
                       page.choices.length + (unFixedChoice?.length ?? 0)
                     }
                     addChoice={() => handleAddChoiceByUser(page.id)}
-                    addAIChoice={() => handleAddChoiceByAI(page.id)}
-                    updatePage={updatePageData}
+                    genAIChoice={() => handleGenChoiceByAI(page.id)}
+                    updatePage={handleUpdatePage}
                     deletePage={() => handleDeletePage(page.id)}
                     isGenerating={isGenerating}
                   />
-                  {combinedChoices.map((choice) => {
-                    return (
-                      <ChoiceCard
-                        key={`${choice.source}-page${page.id}-choice${choice.id}`}
-                        choice={choice}
-                        defaultFixed={choice.source === "server"}
-                        fixChoice={(partialChoice) =>
-                          handleFixChoice(page.id, partialChoice)
-                        }
-                        removeChoice={() => handleDeleteChoice(page.id, choice)}
-                        availablePages={availablePages}
-                        linkedPage={getLinkedPage(choice.toPageId)}
-                        handleNewPage={handleNewPage}
-                      />
-                    );
-                  })}
+                  {combinedChoices
+                    .sort((a, b) => a.id - b.id)
+                    .map((choice) => {
+                      return (
+                        <ChoiceCard
+                          key={`${choice.source}-page${page.id}-choice${choice.id}`}
+                          choice={choice}
+                          defaultFixed={choice.source === "server"}
+                          fixChoice={(partialChoice) =>
+                            handleFixChoice(page.id, partialChoice)
+                          }
+                          removeChoice={() =>
+                            handleDeleteChoice(page.id, choice)
+                          }
+                          availablePages={availablePages}
+                          linkedPage={getLinkedPage(choice.toPageId)}
+                          handleNewPage={handleNewPage}
+                        />
+                      );
+                    })}
                 </div>
               );
             })}
