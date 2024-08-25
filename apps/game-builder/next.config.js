@@ -7,7 +7,7 @@ const nextConfig = {
   transpilePackages: ["@repo/ui"],
   assetPrefix:
     process.env.NODE_ENV === "production"
-      ? "https://choosetale-gamebuilder.vercel.app"
+      ? "https://choosetale-release-git-release-nyanggle.vercel.app/"
       : "",
   async rewrites() {
     const devRewrites = [
