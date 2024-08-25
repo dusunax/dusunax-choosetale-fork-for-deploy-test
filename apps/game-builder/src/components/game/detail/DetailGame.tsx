@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { AspectRatio } from "@repo/ui/components/ui/AspectRatio";
+import { AspectRatio } from "@/components/repo-ui/components/ui/AspectRatio";
 import type { GameInfo } from "@/interface/customType";
 import DateDisplay from "@/components/common/text/DateDisplay";
 

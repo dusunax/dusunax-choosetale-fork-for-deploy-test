@@ -11,7 +11,7 @@
       "@store/*": ["./src/store/*"],
       "@themed/*": ["./src/components/theme/ui/*"],
       "@asset/*": ["./src/asset/*"],
-      "@repo/ui/*": ["./src/components/ui/*"]
+      "@repo/ui/*": ["./src/components/repo-ui/*"]
     },
     "forceConsistentCasingInFileNames": true
   },

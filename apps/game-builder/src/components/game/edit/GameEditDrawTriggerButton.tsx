@@ -1,5 +1,5 @@
 import { ReaderIcon } from "@radix-ui/react-icons";
-import { DrawerTrigger } from "@repo/ui/components/ui/Drawer.tsx";
+import { DrawerTrigger } from "@/components/repo-ui/components/ui/Drawer";
 
 export default function GameEditDrawTriggerButton({
   theme,

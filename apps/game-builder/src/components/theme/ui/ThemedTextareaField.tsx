@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
-import type { TextareaProps } from "@/components/ui/components/ui/Textarea";
-import { Textarea } from "@/components/ui/components/ui/Textarea";
+import type { TextareaProps } from "@/components/repo-ui/components/ui/Textarea";
+import { Textarea } from "@/components/repo-ui/components/ui/Textarea";
 import { useThemeStore } from "@/store/useTheme";
 import FieldErrorMessage from "@/components/common/form/FieldErrorMessage";
 import ThemedLabel from "./ThemedLabel";

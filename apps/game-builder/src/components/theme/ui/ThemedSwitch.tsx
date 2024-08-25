@@ -1,6 +1,6 @@
 import type { Control, FieldValues, Path } from "react-hook-form";
 import { Controller } from "react-hook-form";
-import { Switch } from "@repo/ui/components/ui/Switch.tsx";
+import { Switch } from "@/components/repo-ui/components/ui/Switch";
 import { useThemeStore } from "@/store/useTheme";
 
 interface SwitchProps<T extends FieldValues> {

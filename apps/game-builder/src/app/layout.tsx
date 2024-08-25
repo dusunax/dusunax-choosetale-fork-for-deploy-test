@@ -2,7 +2,7 @@ import "./styles.css";
 import "@repo/ui/styles.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import MobileWrapper from "@repo/ui/components/MobileWrapper.tsx";
+import MobileWrapper from "@/components/repo-ui/components/MobileWrapper";
 import CSSThemeProvider from "@/components/theme/ThemeProvider";
 import Progress from "@/components/common/Progress";
 

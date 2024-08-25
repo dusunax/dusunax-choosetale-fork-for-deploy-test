@@ -6,7 +6,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from "@repo/ui/components/ui/Dialog.tsx";
+} from "@/components/repo-ui/components/ui/Dialog";
 import { formatNumberWithCommas } from "@/utils/formatNumberWithCommas";
 import ThemedButton from "@/components/theme/ui/ThemedButton";
 import ThemedTextareaField from "@/components/theme/ui/ThemedTextareaField";

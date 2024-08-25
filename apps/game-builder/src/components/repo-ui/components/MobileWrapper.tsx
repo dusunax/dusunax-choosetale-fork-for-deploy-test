@@ -8,6 +8,7 @@ export default function MobileWrapper({ children }: PropsWithChildren) {
       <div className="max-w-xl h-full flex flex-col justify-between mx-auto">
         <div className="flex-1">{children}</div>
         <NavBar />
+        <div className="w-4 h-4 bg-red-500"></div>
       </div>
     </div>
   );

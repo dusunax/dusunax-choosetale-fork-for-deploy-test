@@ -10,7 +10,7 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
-} from "@repo/ui/components/ui/Drawer.tsx";
+} from "@/components/repo-ui/components/ui/Drawer";
 import ThemedButton from "@/components/theme/ui/ThemedButton";
 import GameEditFields from "@/components/game/edit/form/GameEditFields";
 import type { PageType } from "@/interface/customType";

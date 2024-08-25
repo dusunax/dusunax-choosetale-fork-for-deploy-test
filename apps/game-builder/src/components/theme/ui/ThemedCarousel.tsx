@@ -8,8 +8,8 @@ import {
   CarouselNext,
   CarouselPrevious,
   type CarouselApi,
-} from "@repo/ui/components/ui/Carousel.tsx";
-import { AspectRatio } from "@repo/ui/components/ui/AspectRatio.tsx";
+} from "@/components/repo-ui/components/ui/Carousel";
+import { AspectRatio } from "@/components/repo-ui/components/ui/AspectRatio";
 import { useThemeStore } from "@/store/useTheme";
 import { type Thumbnail } from "@/interface/customType";
 
