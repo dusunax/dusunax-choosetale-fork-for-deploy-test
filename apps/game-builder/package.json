@@ -1,7 +1,6 @@
 {
-  "name": "game-builder",
+  "name": "@repo/game-builder",
   "version": "0.0.51",
-  "private": true,
   "scripts": {
     "dev": "next dev -p 3001",
     "build": "next build",
