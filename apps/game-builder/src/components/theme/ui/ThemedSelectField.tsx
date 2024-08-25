@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
 import type { Control } from "react-hook-form";
 import { Controller } from "react-hook-form";
-import type { InputProps } from "@repo/ui/components/ui/Input.jsx";
+import type { InputProps } from "@/components/ui/components/ui/Input.jsx";
 import {
   Select,
   SelectContent,

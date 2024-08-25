@@ -1,4 +1,4 @@
-import { Label } from "@repo/ui/components/ui/Label.tsx";
+import { Label } from "@/components/ui/components/ui/Label";
 import { useThemeStore } from "@/store/useTheme";
 
 interface ThemedInputFieldProps {

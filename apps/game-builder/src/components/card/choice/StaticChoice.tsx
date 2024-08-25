@@ -4,7 +4,7 @@ import {
   CardDescription,
   CardFooter,
   CardTitle,
-} from "@repo/ui/components/ui/Card.tsx";
+} from "@/components/ui/components/ui/Card";
 import type { LinkedPage } from "@/interface/customType";
 import ThemedCard from "@/components/theme/ui/ThemedCard";
 import ThemedIconButton from "@/components/theme/ui/ThemedIconButton";
