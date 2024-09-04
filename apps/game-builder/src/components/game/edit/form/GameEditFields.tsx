@@ -1,11 +1,13 @@
+import { useEffect } from "react";
 import type { useForm } from "react-hook-form";
+import "@toast-ui/editor/dist/toastui-editor.css";
 import ThemedInputField from "@themed/ThemedInputField";
-import ThemedTextareaField from "@themed/ThemedTextareaField";
-import { formatNumberWithCommas } from "@/utils/formatNumberWithCommas";
 import type { PageType } from "@/interface/customType";
+import { formatNumberWithCommas } from "@/utils/formatNumberWithCommas";
 import MaxLengthText, {
   setMaxLengthOptions,
 } from "@/components/common/form/MaxLengthText";
+import PageContentEditor from "@/components/common/editor/DescriptionEditor";
 
 const MAX_LENGTH = {
   abridgement: 50,
@@ -19,14 +21,33 @@ export default function GameEditFields({
     register,
     formState: { errors },
     watch,
+    setValue,
   } = useFormProps;
 
-  const descriptioContentLen = watch("description").length || 0;
+  const descriptioContentLen = watch("description")?.length || 0;
   const descriptionMaxLengthOptions = setMaxLengthOptions(
     descriptioContentLen,
     MAX_LENGTH.description,
     20
   );
+
+  const emptyInitialValue = "<p></p>";
+  const handleEditorChange = (content: string) => {
+    setValue("description", content, {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
+  };
+
+  useEffect(() => {
+    register("description", {
+      required: "페이지 내용을 입력해주세요",
+      maxLength: {
+        value: MAX_LENGTH.description,
+        message: `페이지 내용을 ${formatNumberWithCommas(MAX_LENGTH.description)}자 내로 입력해주세요`,
+      },
+    });
+  }, [register]);
 
   return (
     <>
@@ -48,23 +69,15 @@ export default function GameEditFields({
         요약은 플레이어에게 보이지 않습니다.
       </p>
 
-      <MaxLengthText {...descriptionMaxLengthOptions} className="top-4" />
-      <ThemedTextareaField
-        labelText="내용"
-        placeholder="페이지의 내용을 입력하세요"
-        rows={10}
-        maxLength={MAX_LENGTH.description}
-        {...register("description", {
-          required: "페이지 내용을 입력해주세요",
-          maxLength: {
-            value: MAX_LENGTH.description,
-            message: `페이지 내용을 ${formatNumberWithCommas(MAX_LENGTH.description)}자 내로 입력해주세요`,
-          },
-        })}
-        autoComplete="off"
+      <MaxLengthText {...descriptionMaxLengthOptions} className="-top-1" />
+      <PageContentEditor
+        initialValue={watch("description") || emptyInitialValue}
+        onChange={handleEditorChange}
         errMsg={errors.description?.message}
-        className={descriptionMaxLengthOptions.isLessThan ? "text-red-500" : ""}
       />
+      {errors.description && (
+        <p className="text-red-500 text-sm">{errors.description?.message}</p>
+      )}
     </>
   );
 }
