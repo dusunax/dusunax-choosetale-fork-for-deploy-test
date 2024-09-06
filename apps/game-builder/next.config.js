@@ -10,7 +10,7 @@ const nextConfig = {
       ? "https://choosetale-gamebuilder.vercel.app"
       : "",
   async rewrites() {
-    const devRewrites = [
+    const rewrites = [
       {
         source: "/game",
         destination: "/",
@@ -20,9 +20,7 @@ const nextConfig = {
         destination: "/:path*",
       },
     ];
-    const prodRewrites = [];
-
-    return process.env.NODE_ENV === "production" ? prodRewrites : devRewrites;
+    return rewrites;
   },
   images: {
     remotePatterns: [
