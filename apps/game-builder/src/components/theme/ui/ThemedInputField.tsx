@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
-import type { InputProps } from "@repo/ui/components/ui/Input.tsx";
-import { Input } from "@repo/ui/components/ui/Input.tsx";
+import type { InputProps } from "@repo/ui/components/ui/Input";
+import { Input } from "@repo/ui/components/ui/Input";
 import { useThemeStore } from "@/store/useTheme";
 import FieldErrorMessage from "@/components/common/form/FieldErrorMessage";
 import ThemedLabel from "./ThemedLabel";

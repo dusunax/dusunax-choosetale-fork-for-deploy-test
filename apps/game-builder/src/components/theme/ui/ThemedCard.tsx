@@ -1,6 +1,6 @@
 "use client";
 import type { ReactNode } from "react";
-import { Card } from "@repo/ui/components/ui/Card.tsx";
+import { Card } from "@repo/ui/components/ui/Card";
 import { useThemeStore } from "@/store/useTheme";
 
 interface ThemedCardProps {

@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import type { useForm } from "react-hook-form";
-import "@toast-ui/editor/dist/toastui-editor.css";
 import ThemedInputField from "@themed/ThemedInputField";
 import type { PageType } from "@/interface/customType";
 import { formatNumberWithCommas } from "@/utils/formatNumberWithCommas";

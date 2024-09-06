@@ -4,7 +4,7 @@ import {
   CardDescription,
   CardFooter,
   CardTitle,
-} from "@repo/ui/components/ui/Card.tsx";
+} from "@repo/ui/components/ui/Card";
 import type { LinkedPage } from "@/interface/customType";
 import { removeEditorTags } from "@/utils/removeEditorTags";
 import ThemedCard from "@/components/theme/ui/ThemedCard";

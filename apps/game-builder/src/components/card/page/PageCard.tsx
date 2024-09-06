@@ -10,7 +10,7 @@ import {
   CardDescription,
   CardFooter,
   CardTitle,
-} from "@repo/ui/components/ui/Card.tsx";
+} from "@repo/ui/components/ui/Card";
 import type { PageType } from "@/interface/customType";
 import type useGameData from "@/hooks/useGameData";
 import { removeEditorTags } from "@/utils/removeEditorTags";

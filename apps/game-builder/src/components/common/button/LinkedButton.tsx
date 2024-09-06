@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import type { ButtonProps } from "@repo/ui/components/ui/Button.tsx";
+import type { ButtonProps } from "@repo/ui/components/ui/Button";
 import ThemedButton from "@/components/theme/ui/ThemedButton";
 
 interface LinkedButtonProps extends ButtonProps {
