@@ -4,7 +4,6 @@ const nextConfig = {
     formats: ["image/avif", "image/webp"],
   },
   reactStrictMode: true,
-  transpilePackages: ["@repo/ui"],
   assetPrefix:
     process.env.NODE_ENV === "production"
       ? "https://choosetale-gamebuilder.vercel.app"
