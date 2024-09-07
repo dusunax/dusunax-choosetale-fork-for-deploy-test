@@ -25,14 +25,13 @@ export default function DetailGame({
             alt="game thumbnail"
             width={300}
             height={200}
-            objectFit="contain"
           />
         </AspectRatio>
         <h3>No: {gameId}</h3>
         <p>게임 제목: {gameInfoData.title}</p>
         <p>게임 장르: {gameInfoData.genre}</p>
 
-        <p>
+        <div>
           게임 설명:
           <DynamicViewer
             initialEditType="markdown"
@@ -40,7 +39,7 @@ export default function DetailGame({
             height="600px"
             initialValue={gameInfoData.description}
           />
-        </p>
+        </div>
         <p>비공개 여부: {gameInfoData.isPrivate ? "비공개" : "공개"}</p>
         <p>
           생성날짜: <DateDisplay date={gameInfoData.createdAt} />
