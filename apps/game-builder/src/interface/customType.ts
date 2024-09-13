@@ -101,3 +101,48 @@ export interface GameIntro {
     totalEnding: number;
   };
 }
+
+export interface GamePlay {
+  playId: number;
+  page?: {
+    id: number;
+  };
+}
+
+export interface ApiChoice extends NewChoice {
+  id: number;
+}
+
+export interface ApiPage {
+  id: number;
+  description: string;
+  tempDescription: string;
+  choices: ApiChoice[];
+  isEnding: boolean;
+}
+
+export interface GamePlayPage {
+  playId: number;
+  gameIntroData: GameIntro;
+  page: ApiPage[];
+}
+
+export interface ChosenPage {
+  id: number;
+  abridgement: string;
+  choices: [
+    {
+      id: number;
+      title: string;
+      percentage: number;
+    },
+  ];
+}
+
+export interface GameResult {
+  endingPage: {
+    id: number;
+    abridgement: string;
+  };
+  chosenPages: ChosenPage[];
+}
