@@ -2,6 +2,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { ExternalLinkIcon } from "@radix-ui/react-icons";
 import { AspectRatio } from "@repo/ui/components/ui/AspectRatio";
 import type { GameInfo } from "@/interface/customType";
 import DateDisplay from "@/components/common/text/DateDisplay";
@@ -11,10 +12,10 @@ import { toast } from "@/packages/ui/components/hooks/UseToast";
 
 export default function DetailGame({
   gameInfoData,
-  gameId,
+  playId,
 }: {
   gameInfoData: GameInfo;
-  gameId: number;
+  playId: number;
 }) {
   const handleCopy = () => {
     toast({
@@ -38,7 +39,7 @@ export default function DetailGame({
             height={200}
           />
         </AspectRatio>
-        <h3>No: {gameId}</h3>
+        <h3>No: {playId}</h3>
         <p>게임 제목: {gameInfoData.title}</p>
         <p>게임 장르: {gameInfoData.genre}</p>
 
@@ -60,14 +61,19 @@ export default function DetailGame({
         <p>엔딩 수: {gameInfoData.counts.ending}</p>
 
         <div className="my-6 flex flex-col gap-4">
-          <Link href={`/game/${gameId}/intro`} className="w-full">
+          <Link href={`/game-play/${playId}/intro`} className="w-full">
             <Button className="w-full">게임으로</Button>
           </Link>
           <CopyToClipboard
-            text={`${window.location.origin}/game/${gameId}/intro`}
+            text={`${window.location.origin}/game-play/${playId}/intro`}
             onCopy={handleCopy}
           >
-            <Button variant="outline">링크 복사</Button>
+            <Button variant="outline">
+              <div className="flex gap-1 items-center">
+                <ExternalLinkIcon />
+                링크 복사
+              </div>
+            </Button>
           </CopyToClipboard>
         </div>
       </div>
