@@ -1,49 +1,45 @@
 "use client";
 import { motion } from "framer-motion";
 
-interface TypingTextProps {
+export interface TypingTextProps {
   text: string;
+  speed?: "slow" | "normal" | "fast";
   initialDelay?: number;
+  fontSize?: "sm" | "md" | "lg";
+  className?: string;
 }
 
 export default function TypingText({
   text,
-  initialDelay = 1,
+  initialDelay = 0,
+  speed = "normal",
+  className = "",
 }: TypingTextProps) {
-  return (
-    <div className="relative">
-      <motion.div
-        initial={{ opacity: 1 }}
-        animate={{ opacity: 0 }}
-        transition={{ delay: initialDelay, duration: 0.1 }}
-      >
-        <motion.div
-          className="typing-cursor absolute bottom-0 left-0 w-3 h-[2px] mt-auto mb-1 bg-black"
-          animate={{ opacity: [1, 0, 1] }}
-          transition={{
-            duration: 0.25,
-            repeatDelay: 0.25,
-            repeat: Infinity,
-            repeatType: "loop",
-          }}
-        />
-      </motion.div>
+  const typingSpeed = {
+    slow: 0.1,
+    normal: 0.05,
+    fast: 0.02,
+  };
+  const currentSpeed = typingSpeed[speed];
+  const currentDelay = initialDelay;
 
-      <p className="text-lg">
-        {text.split("").map((char, index) => (
-          <motion.span
-            key={index}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              delay: initialDelay + index * 0.05,
-              duration: 0.001,
-            }}
-          >
-            {char}
-          </motion.span>
-        ))}
-      </p>
-    </div>
+  return (
+    <>
+      {text.split("").map((char, index) => (
+        <motion.span
+          // eslint-disable-next-line react/no-array-index-key -- Using index as key because content has no unique identifier
+          key={char + index}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            delay: currentDelay + index * currentSpeed,
+            duration: 0.001,
+          }}
+          className={className}
+        >
+          {char}
+        </motion.span>
+      ))}
+    </>
   );
 }
