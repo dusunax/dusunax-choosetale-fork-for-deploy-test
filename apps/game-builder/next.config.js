@@ -6,7 +6,7 @@ const nextConfig = {
   reactStrictMode: true,
   assetPrefix:
     process.env.NODE_ENV === "production"
-      ? "https://choosetale-gamebuilder.vercel.app"
+      ? "https://choosetale-game.vercel.app"
       : "",
   async rewrites() {
     const rewrites = [
