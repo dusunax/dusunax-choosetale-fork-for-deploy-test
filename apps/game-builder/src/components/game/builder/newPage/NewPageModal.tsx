@@ -1,5 +1,5 @@
 import { useEffect, type Dispatch, type SetStateAction } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import {
   Dialog,
   DialogContent,
@@ -72,9 +72,9 @@ export default function NewPageModal({
     reset();
   };
 
-  const contentLen = watch("content").length || 0;
+  const contentControl = useWatch({ control, name: "content" });
   const contentMaxLengthOptions = setMaxLengthOptions(
-    contentLen,
+    contentControl.length,
     MAX_LENGTH.content,
     20
   );

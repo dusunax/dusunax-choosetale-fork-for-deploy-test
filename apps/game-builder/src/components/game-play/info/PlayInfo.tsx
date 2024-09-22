@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { type GameIntro } from "@/interface/customType";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
+import { type GameIntro } from "@/interface/customType";
 import PlayInfoModal from "./PlayInfoModal";
 
 export default function PlayInfo({ gameIntro }: { gameIntro: GameIntro }) {

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useRef } from "react";
-import { type useForm } from "react-hook-form";
+import { useWatch, type useForm } from "react-hook-form";
 import { ImageIcon, TrashIcon } from "@radix-ui/react-icons";
 import ThemedCarousel from "@themed/ThemedCarousel";
 import ThemedIconButton from "@themed/ThemedIconButton";
@@ -13,7 +13,7 @@ import useThumbnails from "@/hooks/useThumbnail";
 export default function Thumbnails({
   ...useFormProps
 }: ReturnType<typeof useForm<GameInfo>>) {
-  const { watch, getValues } = useFormProps;
+  const { getValues, control } = useFormProps;
   const {
     handleUpload,
     handleGenerate,
@@ -26,7 +26,8 @@ export default function Thumbnails({
   } = useThumbnails(useFormProps);
   const gameId = Number(getValues("id"));
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const thumbnailExists = watch("thumbnails").length > 0;
+  const thumbnails = useWatch({ control, name: "thumbnails" });
+  const thumbnailExists = thumbnails.length > 0;
 
   const onUploadButtonClick = () => {
     fileInputRef.current && fileInputRef.current.click();
@@ -45,7 +46,7 @@ export default function Thumbnails({
       <ThemedCard className="flex-col !py-4 gap-4">
         {thumbnailExists && (
           <ThemedCarousel
-            thumbnails={watch("thumbnails")}
+            thumbnails={thumbnails}
             setCurrentThumbnailId={setCurrentThumbnailIdx}
             currentThumbnailIdx={currentThumbnailIdx}
             mainThumbnailImageId={mainThumbnailImageId}

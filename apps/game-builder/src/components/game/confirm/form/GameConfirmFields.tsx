@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import type { useForm } from "react-hook-form";
+import { useWatch, type useForm } from "react-hook-form";
 import { InfoCircledIcon, Pencil1Icon } from "@radix-ui/react-icons";
 import ThemedInputField from "@themed/ThemedInputField";
 import ThemedSwitch from "@themed/ThemedSwitch";
@@ -25,22 +25,24 @@ export default function GameConfirmFields({
   const {
     register,
     formState: { errors },
-    watch,
     getValues,
     control,
     setValue,
   } = useFormProps;
 
-  const titleContentLen = watch("title").length || 0;
+  const title = useWatch({ control, name: "title" });
+  const description = useWatch({ control, name: "description" });
+
+  const titleContentLen = title?.length || 0;
   const titleMaxLengthOptions = setMaxLengthOptions(
     titleContentLen,
     MAX_LENGTH.title,
     20
   );
 
-  const descriptioContentLen = watch("description").length || 0;
+  const descriptionContentLen = description?.length || 0;
   const descriptionMaxLengthOptions = setMaxLengthOptions(
-    descriptioContentLen,
+    descriptionContentLen,
     MAX_LENGTH.description,
     20
   );
@@ -87,7 +89,7 @@ export default function GameConfirmFields({
       <MaxLengthText {...descriptionMaxLengthOptions} className="top-0" />
       <div className="h-[20vh] bg-gray-100">
         <PageContentEditor
-          initialValue={watch("description") || "<p></p>"}
+          initialValue={description}
           onChange={handleEditorChange}
           errMsg={errors.description?.message}
           height="20vh"

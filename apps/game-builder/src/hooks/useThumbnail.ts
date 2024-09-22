@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import type { useForm } from "react-hook-form";
+import { useWatch, type useForm } from "react-hook-form";
 import type { GameInfo } from "@/interface/customType";
 import { uploadThumbnail } from "@/actions/thumbnail/uploadThumbnail";
 import { deleteThumbnail } from "@/actions/thumbnail/deleteThumbnail";
@@ -8,10 +8,10 @@ import { generateThumbnail } from "@/actions/thumbnail/generateThumbnail";
 export default function useThumbnail({
   ...useFormProps
 }: ReturnType<typeof useForm<GameInfo>>) {
-  const { setValue, getValues, watch } = useFormProps;
+  const { setValue, getValues, control } = useFormProps;
   const [currentThumbnailIdx, setCurrentThumbnailIdx] = useState(0);
   const [isGenerating, setIsGenerating] = useState(false);
-  const mainThumbnailImageId = watch("thumbnailImageId");
+  const mainThumbnailImageId = useWatch({ control, name: "thumbnailImageId" });
 
   // 이미지 업로드
   const handleUpload = useCallback(

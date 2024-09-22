@@ -1,6 +1,6 @@
 "use client";
 import { useEffect } from "react";
-import type { UseFormReturn } from "react-hook-form";
+import { useWatch, type UseFormReturn } from "react-hook-form";
 import type { CreateGameReqDto } from "@choosetale/nestia-type/lib/structures/CreateGameReqDto";
 import ThemedInputField from "@themed/ThemedInputField";
 import { formatNumberWithCommas } from "@/utils/formatNumberWithCommas";
@@ -21,15 +21,17 @@ export default function GameCreateFields({
   const {
     register,
     formState: { errors },
-    watch,
     setValue,
+    control,
   } = useFormProps;
 
-  const titleLen = watch("title")?.length || 0;
+  const title = useWatch({ control, name: "title" });
+  const titleLen = title?.length || 0;
   const titleLenString = formatNumberWithCommas(titleLen);
   const lessThan3LeftForTitle = MAX_LENGTH.title - titleLen < 3;
 
-  const pageContentLen = watch("pageOneContent")?.length || 0;
+  const pageOneContent = useWatch({ control, name: "pageOneContent" });
+  const pageContentLen = pageOneContent?.length || 0;
   const pageContentLenString = formatNumberWithCommas(pageContentLen);
   const lessThan20LeftForPageContent =
     MAX_LENGTH.pageOneContent - pageContentLen < 20;

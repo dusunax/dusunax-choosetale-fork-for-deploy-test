@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import type { useForm } from "react-hook-form";
+import { useWatch, type useForm } from "react-hook-form";
 import ThemedInputField from "@themed/ThemedInputField";
 import type { PageType } from "@/interface/customType";
 import { formatNumberWithCommas } from "@/utils/formatNumberWithCommas";
@@ -19,11 +19,12 @@ export default function GameEditFields({
   const {
     register,
     formState: { errors },
-    watch,
     setValue,
+    control,
   } = useFormProps;
 
-  const descriptioContentLen = watch("description")?.length || 0;
+  const description = useWatch({ control, name: "description" });
+  const descriptioContentLen = description.length || 0;
   const descriptionMaxLengthOptions = setMaxLengthOptions(
     descriptioContentLen,
     MAX_LENGTH.description,
@@ -70,7 +71,7 @@ export default function GameEditFields({
 
       <MaxLengthText {...descriptionMaxLengthOptions} className="-top-1" />
       <PageContentEditor
-        initialValue={watch("description") || emptyInitialValue}
+        initialValue={description || emptyInitialValue}
         onChange={handleEditorChange}
         errMsg={errors.description?.message}
       />
