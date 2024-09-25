@@ -35,6 +35,14 @@ const nextConfig = {
         protocol: "https",
         hostname: "www.google.com",
       },
+      {
+        protocol: "http",
+        hostname: process.env.NEXT_PUBLIC_IMAGE_DOMAIN,
+      },
+      {
+        protocol: "https",
+        hostname: "image.dongascience.com",
+      },
     ],
   },
 };
