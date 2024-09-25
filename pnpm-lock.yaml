@@ -189,15 +189,6 @@ importers:
 
   packages/config-typescript: {}
 
-  packages/types:
-    dependencies:
-      '@choosetale/nestia-type':
-        specifier: 1.0.1
-        version: npm.pkg.github.com/@ChooseTale/nestia-type@1.0.1
-      nestia:
-        specifier: ^5.3.0
-        version: 5.3.0
-
 packages:
 
   /@aashutoshrathi/word-wrap@1.2.6:
@@ -6255,10 +6246,4 @@ packages:
       '@types/react': 18.2.61
       react: 18.2.0
       use-sync-external-store: 1.2.0(react@18.2.0)
-    dev: false
-
-  npm.pkg.github.com/@ChooseTale/nestia-type@1.0.1:
-    resolution: {integrity: sha512-s9NP70p0qMOyGgHiaUXIFAwENM5rYqxFaV/kp4os6d4o4bvqmE06jO0BRBdmjE91ODRzhOIDW7Kzo7VWmjYbwQ==, tarball: https://npm.pkg.github.com/download/@ChooseTale/nestia-type/1.0.1/c71266a5b77be0661e161ec979d590ff5ea387cb}
-    name: '@ChooseTale/nestia-type'
-    version: 1.0.1
     dev: false
