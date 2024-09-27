@@ -104,9 +104,9 @@ export default function useGamePlay({
   return {
     page,
     currentPageId,
-    choiceSending: isChoiceSending,
+    isChoiceSending,
     isEnding,
-    loading: isLoading,
+    isLoading,
     getCurrentPage,
     getEndingPage,
     selectChoice,

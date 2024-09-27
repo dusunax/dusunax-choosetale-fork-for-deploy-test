@@ -12,13 +12,14 @@ export default function PlayPage({
   playId: number;
   pageId: number;
 }) {
-  const { page, choiceSending, isEnding, loading, selectChoice } = useGamePlay({
-    pageId,
-    playId,
-    gameId,
-  });
+  const { page, isChoiceSending, isEnding, isLoading, selectChoice } =
+    useGamePlay({
+      pageId,
+      playId,
+      gameId,
+    });
 
-  if (loading || (loading && !page)) {
+  if (isLoading || (isLoading && !page)) {
     return null;
   }
   if (!page) {
@@ -45,7 +46,7 @@ export default function PlayPage({
       </div>
 
       <PlayChoices
-        choiceSending={choiceSending}
+        choiceSending={isChoiceSending}
         choices={page.choices}
         selectChoice={selectChoice}
         pageLength={page.description.length}
