@@ -4,7 +4,7 @@ import { useWatch, type UseFormReturn } from "react-hook-form";
 import type { CreateGameReqDto } from "@choosetale/nestia-type/lib/structures/CreateGameReqDto";
 import ThemedInputField from "@themed/ThemedInputField";
 import { formatNumberWithCommas } from "@/utils/formatNumberWithCommas";
-import PageContentEditor from "@/components/common/editor/DescriptionEditor";
+import PageContentEditor from "@/components/common/editor/PageContentEditor";
 
 interface GameFieldsProps extends UseFormReturn<CreateGameReqDto> {
   emptyInitialValue: string;

@@ -15,7 +15,8 @@ import ThemedSwitch from "@/components/theme/ui/ThemedSwitch";
 import MaxLengthText, {
   setMaxLengthOptions,
 } from "@/components/common/form/MaxLengthText";
-import PageContentEditor from "@/components/common/editor/DescriptionEditor";
+import PageContentEditor from "@/components/common/editor/PageContentEditor";
+import { emptyInitialValue } from "@/components/common/editor/contant";
 
 interface NewPageModalProps extends ReturnType<typeof useForm<NewPage>> {
   handleNewPage: (newPageData: { content: string; isEnding: boolean }) => void;
@@ -80,7 +81,6 @@ export default function NewPageModal({
     20
   );
 
-  const emptyInitialValue = "<p></p>";
   const handleEditorChange = (content: string) => {
     setValue("content", content, {
       shouldValidate: true,

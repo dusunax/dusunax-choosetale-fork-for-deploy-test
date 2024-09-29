@@ -5,10 +5,11 @@ import {
 } from "@toast-ui/react-editor";
 // eslint-disable-next-line import/no-unresolved -- @toast-ui/editor/dist/toastui-editor.css is correctly imported but ESLint can't resolve it
 import "@toast-ui/editor/dist/toastui-editor.css";
+import { emptyInitialValue } from "./contant";
 
 interface CustomEditorProps extends ToastUiEditorProps {
   forwardedRef: ForwardedRef<ToastUiEditor>;
-  onChange?: (content: string) => void; // onChange expecting a string as content
+  onChange?: (content: string) => void;
 }
 
 export default function Editor({
@@ -32,11 +33,17 @@ export default function Editor({
 
   const handleOnChange = () => {
     const content = getWysiwygContent();
-    const cleanedContent = content.trim() === "<p></p>" ? "" : content;
+    const cleanedContent =
+      content.trim() === emptyInitialValue ? emptyInitialValue : content;
     onChange && onChange(cleanedContent);
   };
 
   return (
-    <ToastUiEditor {...props} onChange={handleOnChange} ref={forwardedRef} />
+    <ToastUiEditor
+      {...props}
+      initialValue={props.initialValue || emptyInitialValue}
+      onChange={handleOnChange}
+      ref={forwardedRef}
+    />
   );
 }

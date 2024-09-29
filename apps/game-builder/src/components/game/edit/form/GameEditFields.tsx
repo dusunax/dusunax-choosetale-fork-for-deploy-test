@@ -6,7 +6,7 @@ import { formatNumberWithCommas } from "@/utils/formatNumberWithCommas";
 import MaxLengthText, {
   setMaxLengthOptions,
 } from "@/components/common/form/MaxLengthText";
-import PageContentEditor from "@/components/common/editor/DescriptionEditor";
+import PageContentEditor from "@/components/common/editor/PageContentEditor";
 
 const MAX_LENGTH = {
   abridgement: 50,
@@ -31,7 +31,6 @@ export default function GameEditFields({
     20
   );
 
-  const emptyInitialValue = "<p></p>";
   const handleEditorChange = (content: string) => {
     setValue("description", content, {
       shouldValidate: true,
@@ -68,7 +67,7 @@ export default function GameEditFields({
 
       <MaxLengthText {...descriptionMaxLengthOptions} className="-top-1" />
       <PageContentEditor
-        initialValue={description || emptyInitialValue}
+        initialValue={description}
         onChange={handleEditorChange}
         errMsg={errors.description?.message}
       />

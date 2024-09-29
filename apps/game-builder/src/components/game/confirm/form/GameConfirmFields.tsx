@@ -10,7 +10,7 @@ import MaxLengthText, {
 } from "@/components/common/form/MaxLengthText";
 import TextWithCounts from "@/components/common/text/TextWithCounts";
 import DateDisplay from "@/components/common/text/DateDisplay";
-import PageContentEditor from "@/components/common/editor/DescriptionEditor";
+import PageContentEditor from "@/components/common/editor/PageContentEditor";
 import Thumbnails from "./Thumbnails";
 import GenresSelect from "./GenresSelect";
 

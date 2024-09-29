@@ -6,6 +6,7 @@ import type { CreateGameReqDto } from "@choosetale/nestia-type/lib/structures/Cr
 import type { ExtendsCreateGameResDto } from "@/interface/newGameData";
 import { useGameStore } from "@/store/gameStore";
 import { createGame } from "@/actions/game/createGame";
+import { emptyInitialValue } from "@/components/common/editor/contant";
 import NextButton from "@components/button/SubmitButton";
 import GameCreateFields from "@/components/game/create/form/GameCreateFields";
 
@@ -16,7 +17,6 @@ export default function CreateGame() {
   const useFormProps = useForm<CreateGameReqDto>();
   const { handleSubmit } = useFormProps;
 
-  const emptyInitialValue = "<p></p>";
   const onSubmit: SubmitHandler<CreateGameReqDto> = async (data) => {
     if (data.pageOneContent === emptyInitialValue) {
       useFormProps.setError("pageOneContent", {
