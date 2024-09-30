@@ -18,6 +18,7 @@ export const getGameIntro = async (
         "Content-Type": "application/json",
       },
       mode: "no-cors",
+      next: { tags: ["game-intro"] },
     });
 
     const intro = (await response.json()) as GameIntro;

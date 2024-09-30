@@ -1,4 +1,5 @@
 "use server";
+import { revalidateTag } from "next/cache";
 import type { HttpError } from "@choosetale/nestia-type";
 import { API_URL } from "@/config/config";
 import type { GamePlay } from "@/interface/customType";
@@ -23,6 +24,8 @@ export const postGameFirstStart = async (
     );
 
     const gamePlay = (await response.json()) as GamePlay;
+
+    revalidateTag("game-intro");
     return { success: true, gamePlay };
   } catch (error) {
     return { success: false, error: error as HttpError };
