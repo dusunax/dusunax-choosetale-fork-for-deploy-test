@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { type GameIntro as GameIntroType } from "@/interface/customType";
 import PlayInfo from "../info/PlayInfo";
 import PlayPage from "./PlayPage";
+import { revalidatePath } from "next/cache";
 
 interface GamePlayProps {
   playId: number;
@@ -16,6 +17,7 @@ export default function GamePlay({ playId, gameId, gameIntro }: GamePlayProps) {
 
   if (!pageId) {
     router.push(`/game-play/start?gameId=${gameId}`);
+    revalidatePath("/game-play");
   }
 
   return (
