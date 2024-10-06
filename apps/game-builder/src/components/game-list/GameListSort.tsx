@@ -1,24 +1,29 @@
-import { useRouter } from "next/navigation";
+"use client";
+import { useRouter, useSearchParams } from "next/navigation";
+import { type SortType } from "@/interface/customType";
+import { type FormattedSearchParams } from "@/utils/formatGameListSearchParams";
 
-export default function GameListSort({
-  searchParams,
-}: {
-  searchParams: string;
-}) {
+interface GameListSelectProps {
+  searchParams: FormattedSearchParams;
+}
+
+export default function GameListSort({ searchParams }: GameListSelectProps) {
   const router = useRouter();
+  const params = useSearchParams();
 
-  const createParams = (paramsString: string) =>
-    new URLSearchParams(paramsString);
-  const params = createParams(searchParams);
-  const defaultSort = "desc";
+  const defaultSort = searchParams.sort;
 
-  const handleSortChange = (newSortOrder: "asc" | "desc") => {
-    const updatedParams = createParams(searchParams);
+  const handleSortChange = (newSortOrder: SortType) => {
+    const updatedParams = new URLSearchParams(params);
     updatedParams.set("sort", newSortOrder);
     router.push(`?${updatedParams.toString()}`);
   };
 
   const sortId = "sortSelect";
+  const sorts: { value: SortType; option: string }[] = [
+    { value: "LATEST", option: "최신 순" },
+    { value: "POPULAR", option: "인기 순" },
+  ];
 
   return (
     <>
@@ -26,10 +31,13 @@ export default function GameListSort({
       <select
         id={sortId}
         value={params.get("sort") || defaultSort}
-        onChange={(e) => handleSortChange(e.target.value as "asc" | "desc")}
+        onChange={(e) => handleSortChange(e.target.value as SortType)}
       >
-        <option value="asc">오래된 순</option>
-        <option value="desc">최신 순</option>
+        {sorts.map(({ value, option }) => (
+          <option key={value} value={value}>
+            {option}
+          </option>
+        ))}
       </select>
     </>
   );

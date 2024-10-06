@@ -7,31 +7,52 @@ import {
   type GameListSearchParams,
   formatGameListSearchParams,
 } from "@/utils/formatGameListSearchParams";
+import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import GameListCard from "./GameListCard";
-import GameListFilters from "./GameListFilters";
 
 export default function GameList({ firstList }: { firstList: GameListType }) {
   const searchParams = useSearchParams();
   const [gameList, setGameList] = useState<GameListType>(firstList);
   const [error, setError] = useState<string | null>(null);
+
   const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [page, setPage] = useState(1);
+  const limit = 4;
+  const callback = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
+
+  const observerRef = useInfiniteScroll({
+    callback,
+    isLoading: loading,
+    hasMore,
+  });
 
   const formattedSearchParams = useMemo(() => {
     const params = Object.fromEntries(
       searchParams
     ) as unknown as GameListSearchParams;
+
     return formatGameListSearchParams(params);
   }, [searchParams]);
 
   useEffect(() => {
-    const fetchGameList = async () => {
+    const fetchGameList = async (pageNum: number) => {
       setLoading(true);
       setError(null);
 
       try {
-        const response = await getGameList(formattedSearchParams);
+        const response = await getGameList({
+          ...formattedSearchParams,
+          page: pageNum,
+          limit,
+        });
         if (response.success) {
-          setGameList(response.gameList);
+          setGameList((prevList) => [...prevList, ...response.gameList]);
+          if (response.gameList.length < limit) {
+            setHasMore(false);
+          }
         } else {
           throw new Error("Failed to fetch game list");
         }
@@ -42,8 +63,10 @@ export default function GameList({ firstList }: { firstList: GameListType }) {
       }
     };
 
-    fetchGameList();
-  }, [formattedSearchParams]);
+    if (page > 1) {
+      fetchGameList(page);
+    }
+  }, [formattedSearchParams, page]);
 
   if (error) {
     return <p>{error}</p>;
@@ -51,10 +74,8 @@ export default function GameList({ firstList }: { firstList: GameListType }) {
 
   return (
     <>
-      <GameListFilters searchParams={searchParams.toString()} />
-      {gameList.map((e) => (
-        <GameListCard gameData={e} key={e.game.id} />
-      ))}
+      {gameList?.map((e) => <GameListCard gameData={e} key={e.game.id} />)}
+      <div ref={observerRef} style={{ height: "1px" }} />
       {loading && <p className="text-center">Loading...</p>}
     </>
   );
