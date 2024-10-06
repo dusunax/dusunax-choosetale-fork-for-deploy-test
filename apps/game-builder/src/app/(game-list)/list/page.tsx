@@ -6,6 +6,7 @@ import {
 } from "@/utils/formatGameListSearchParams";
 import GameList from "@/components/game-list/GameList";
 import GameListFilters from "@/components/game-list/GameListFilters";
+import GameListCount from "@/components/game-list/GameListCount";
 
 export const dynamic = "force-dynamic";
 
@@ -26,8 +27,15 @@ export default async function Page({ searchParams }: GameListParams) {
 
   return (
     <Suspense fallback={null}>
-      <GameListFilters searchParams={formattedSearchParams} />
-      <GameList firstList={response.gameList} />
+      <div className="h-full flex flex-col">
+        <div className="flex justify-between items-center px-10">
+          <GameListCount genre={formattedSearchParams.genre} />
+          <GameListFilters searchParams={formattedSearchParams} />
+        </div>
+        <div className="py-5 h-[calc(100vh-140px)] overflow-y-scroll">
+          <GameList firstList={response.gameList} />
+        </div>
+      </div>
     </Suspense>
   );
 }
