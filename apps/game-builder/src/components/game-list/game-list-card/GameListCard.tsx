@@ -1,25 +1,29 @@
-import { useState } from "react";
+import { type SyntheticEvent, useState } from "react";
 import Image from "next/image";
 import { ImageIcon } from "@radix-ui/react-icons";
 import { AspectRatio } from "@/packages/ui/components/ui/AspectRatio";
 import { type GameListGame } from "@/interface/customType";
 import { useTranslation } from "@/hooks/useTranslation";
-import ProfileIcons from "./ProfileIcons";
+import {
+  getPlaceholderImageOnError,
+  placeholderSrc,
+} from "@/utils/getPlaceholderImageOnError";
+import PlayerImages from "./PlayerImages";
 
 export default function GameListCard({ gameData }: { gameData: GameListGame }) {
   const { t } = useTranslation();
+  const [isError, setIsError] = useState(false);
+
   const game = gameData.game;
+  if (!game) return null;
+
   const { thumbnail, title, genre } = game;
   const totalRechedEndingPlayCount =
     gameData.enrichData.totalRechedEndingPlayCount;
 
-  const [src, setSrc] = useState(thumbnail?.url);
-  const [isError, setIsError] = useState(false);
-  const placeholderSrc =
-    "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80";
-
-  const handleError = () => {
-    setSrc(placeholderSrc);
+  const handleError = (e: SyntheticEvent<HTMLImageElement>) => {
+    if (isError) return;
+    getPlaceholderImageOnError(e);
     setIsError(true);
   };
 
@@ -27,7 +31,7 @@ export default function GameListCard({ gameData }: { gameData: GameListGame }) {
     <div>
       <AspectRatio ratio={1 / 1} className="mb-2">
         <Image
-          src={src}
+          src={thumbnail?.url ?? placeholderSrc}
           alt={`thumbnail image ${thumbnail?.id}`}
           className="rounded-md object-cover select-none"
           onError={handleError}
@@ -35,7 +39,7 @@ export default function GameListCard({ gameData }: { gameData: GameListGame }) {
           sizes="(max-width: 600px) 80vw, 400px"
           style={{ objectFit: "cover" }}
         />
-        {isError && (
+        {(isError || !thumbnail?.url) && (
           <div className="absolute w-full h-full rounded-md border border-red-500 flex justify-center items-center">
             <ImageIcon className="w-10 h-10" color="#aaaaaa" />
             <div className="w-[42px] border-b-2 absolute border-[#aaaaaa] -rotate-45" />
@@ -51,7 +55,7 @@ export default function GameListCard({ gameData }: { gameData: GameListGame }) {
         <div className="flex items-center gap-1">
           {totalRechedEndingPlayCount !== 0 ? (
             <>
-              <ProfileIcons
+              <PlayerImages
                 profileIcons={Array(totalRechedEndingPlayCount).fill("")}
               />
               <p className="caption mt-1">

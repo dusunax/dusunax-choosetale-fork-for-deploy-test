@@ -8,7 +8,7 @@ import {
   formatGameListSearchParams,
 } from "@/utils/formatGameListSearchParams";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
-import GameListCard from "./game-list-card/GameListCard";
+import Game from "@/app/(game-list)/_components/Game";
 
 export default function GameList({ firstList }: { firstList: GameListType }) {
   const searchParams = useSearchParams();
@@ -86,7 +86,7 @@ export default function GameList({ firstList }: { firstList: GameListType }) {
   return (
     <div>
       <div className="grid grid-cols-2 gap-x-2 gap-y-6">
-        {gameList?.map((e) => <GameListCard gameData={e} key={e.game.id} />)}
+        {gameList?.map((e) => <Game gameData={e} key={e.game.id} />)}
       </div>
       <div ref={observerRef} style={{ height: "1px" }} />
       {loading && <p className="text-center">Loading...</p>}

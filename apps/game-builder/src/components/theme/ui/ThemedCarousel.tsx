@@ -1,4 +1,10 @@
-import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
+import {
+  type Dispatch,
+  type SetStateAction,
+  type SyntheticEvent,
+  useEffect,
+  useState,
+} from "react";
 import Image from "next/image";
 import { ImageIcon, StarFilledIcon } from "@radix-ui/react-icons";
 import {
@@ -12,6 +18,10 @@ import {
 import { AspectRatio } from "@repo/ui/components/ui/AspectRatio.tsx";
 import { useThemeStore } from "@/store/useTheme";
 import { type Thumbnail } from "@/interface/customType";
+import {
+  getPlaceholderImageOnError,
+  placeholderSrc,
+} from "@/utils/getPlaceholderImageOnError";
 
 interface ThemedCarouselProps {
   thumbnails: Thumbnail[];
@@ -109,13 +119,11 @@ function CarouselItemWithOnError({
   isMainThumbnailImageId: boolean;
   onChangeMainThumbnailImageId: (id: number) => void;
 }) {
-  const [src, setSrc] = useState(thumbnail.url);
   const [isError, setIsError] = useState(false);
-  const placeholderSrc =
-    "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80";
 
-  const handleError = () => {
-    setSrc(placeholderSrc);
+  const handleError = (e: SyntheticEvent<HTMLImageElement>) => {
+    if (isError) return;
+    getPlaceholderImageOnError(e);
     setIsError(true);
   };
 
@@ -124,7 +132,7 @@ function CarouselItemWithOnError({
       <AspectRatio ratio={9 / 9}>
         <div className="absolute w-full h-full">
           <Image
-            src={src}
+            src={thumbnail?.url ?? placeholderSrc}
             alt={`thumbnail image ${thumbnail.id}`}
             className="rounded-md object-cover border select-none"
             onError={handleError}
@@ -134,7 +142,7 @@ function CarouselItemWithOnError({
             style={{ objectFit: "cover" }}
           />
         </div>
-        {isError && (
+        {(isError || !thumbnail?.url) && (
           <div className="absolute w-full h-full rounded-md border border-red-500 flex justify-center items-center">
             <ImageIcon className="w-10 h-10" color="#aaaaaa" />
             <div className="w-[42px] border-b-2 absolute border-[#aaaaaa] -rotate-45" />
