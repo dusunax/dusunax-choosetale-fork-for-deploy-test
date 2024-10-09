@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { type SyntheticEvent, useEffect, useState } from "react";
 import Image from "next/image";
 import {
   DialogContent,
@@ -57,14 +57,21 @@ export default function GameIntroModal({
     }
   }, [isOpen, gameId, gameIntroData]);
 
-  // TODO: 게임 플레이어 프로필 이미지 URL 가져오기
-  // const gamePlayer = gameData.game.player.map(
-  //   (player) => player.profileImage.url
-  // );
+  const gamePlayerImageUrls = gameData.game.player
+    .map((player) => player.profileImage.url)
+    .filter((e) => e !== "");
   const isGamePlaying = gameIntroData?.play !== null;
   const lastPageAbridgement = gameIntroData?.play?.page.abridgement;
   const gameDescription = gameIntroData?.game.description;
 
+  const [hasError, setHasError] = useState(false);
+  const handleImageError = (e: SyntheticEvent<HTMLImageElement>) => {
+    if (hasError) return;
+    setHasError(true);
+    getPlaceholderImageOnError(e);
+  };
+
+  if (!gameData) return null;
   if (error) {
     return (
       <DialogContent>
@@ -87,7 +94,7 @@ export default function GameIntroModal({
             fill
             sizes="(max-width: 600px) 80vw, 400px"
             style={{ objectFit: "cover" }}
-            onError={getPlaceholderImageOnError}
+            onError={handleImageError}
           />
           <div className="mt-[1px] absolute bg-gradient-to-b from-transparent from-50% to-80% to-grey-900 w-full h-full top-0 left-0" />
         </AspectRatio>
@@ -120,15 +127,11 @@ export default function GameIntroModal({
           <div className="flex items-center gap-1">
             {totalRechedEndingPlayCount !== 0 && (
               <>
-                <PlayerImages profileIcons={new Array(3).fill("")} />
-                {/* 
-                      TODO: 
-                        ProfileIcons 컴포넌트를 사용하려면 진짜 gamePlayer 필요
-                        (더미 텍스트가 Next Image에 들어가면서 오류 발생)
-                      <ProfileIcons profileIcons={gamePlayer} /> 
-                    */}
+                {gamePlayerImageUrls.length > 0 && (
+                  <PlayerImages gamePlayerImageUrls={gamePlayerImageUrls} />
+                )}
                 <p className="caption mt-1">
-                  {totalRechedEndingPlayCount}명이 엔딩을 봤어요
+                  {totalRechedEndingPlayCount}명이 플레이 했어요
                 </p>
               </>
             )}
@@ -163,9 +166,7 @@ export default function GameIntroModal({
                     {lastPageAbridgement ? (
                       <>
                         <span className="flex-1 line-clamp-1">
-                          텍스트 게임 텍스트 텍스트 게임 텍스트텍스트 게임
-                          텍스트텍스트 게임 텍스트텍스트 게임 텍스트텍스트 게임
-                          텍스트텍스트 게임 텍스트
+                          {lastPageAbridgement}
                         </span>
                         <span>까지 했어요</span>
                       </>

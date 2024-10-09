@@ -11,7 +11,7 @@ export default function NavBar() {
       <NavigationMenu className="w-full h-full max-w-none px-8 md:px-10 lg:px-12">
         <ul className="w-full h-full flex justify-between items-center !mb-0">
           <NavigationMenuItem>
-            <Link href="/">
+            <Link href="/list">
               <HomeIcon
                 height={24}
                 width={24}

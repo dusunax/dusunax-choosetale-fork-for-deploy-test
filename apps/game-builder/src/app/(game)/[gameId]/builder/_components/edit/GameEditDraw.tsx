@@ -12,10 +12,10 @@ import {
   DrawerTitle,
 } from "@repo/ui/components/ui/Drawer.tsx";
 import ThemedButton from "@/components/theme/ui/ThemedButton";
-import GameEditFields from "./GameEditFields";
 import type { PageType } from "@/interface/customType";
 import type useGameData from "@/hooks/useGameData";
 import { removeEditorTags } from "@/utils/removeEditorTags";
+import GameEditFields from "./GameEditFields";
 import GameEditDrawTriggerButton from "./GameEditDrawTriggerButton";
 import EndingPageSwitch from "./EndingPageSwitch";
 

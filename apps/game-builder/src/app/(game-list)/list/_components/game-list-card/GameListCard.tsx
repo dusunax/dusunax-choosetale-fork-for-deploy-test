@@ -26,6 +26,9 @@ export default function GameListCard({ gameData }: { gameData: GameListGame }) {
     getPlaceholderImageOnError(e);
     setIsError(true);
   };
+  const gamePlayerImageUrls = gameData.game.player
+    .map((player) => player.profileImage.url)
+    .filter((e) => e !== "");
 
   return (
     <div>
@@ -55,11 +58,11 @@ export default function GameListCard({ gameData }: { gameData: GameListGame }) {
         <div className="flex items-center gap-1">
           {totalRechedEndingPlayCount !== 0 ? (
             <>
-              <PlayerImages
-                profileIcons={Array(totalRechedEndingPlayCount).fill("")}
-              />
+              {gamePlayerImageUrls.length > 0 && (
+                <PlayerImages gamePlayerImageUrls={gamePlayerImageUrls} />
+              )}
               <p className="caption mt-1">
-                {totalRechedEndingPlayCount}명이 엔딩을 봤어요
+                {totalRechedEndingPlayCount}명이 플레이 했어요
               </p>
             </>
           ) : (
