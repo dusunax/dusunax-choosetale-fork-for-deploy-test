@@ -124,7 +124,7 @@ export default function GameIntroModal({
         <div className="relative pb-[100%]" />
 
         <div className="relative flex items-center justify-between h-10 px-[1px] -mt-[6rem]">
-          {gameData.enrichData.me.reachedEndingPlayCount && (
+          {gameData.enrichData.me.reachedEndingPlayCount > 0 && (
             <div className="flex items-center gap-2 absolute -top-8">
               <CompleteBadge className="w-[1.875rem] h-[1.875rem]" />
 
