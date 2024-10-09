@@ -18,7 +18,7 @@ export default function GameList({ firstList }: { firstList: GameListType }) {
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
-  const limit = 4;
+  const LIMIT_AFTER_PAGE_ONE = 6;
   const callback = () => {
     setPage((prevPage) => prevPage + 1);
   };
@@ -53,11 +53,11 @@ export default function GameList({ firstList }: { firstList: GameListType }) {
         const response = await getGameList({
           ...formattedSearchParams,
           page: pageNum,
-          limit,
+          limit: LIMIT_AFTER_PAGE_ONE,
         });
         if (response.success) {
           setGameList((prevList) => [...prevList, ...response.gameList]);
-          if (response.gameList.length < limit) {
+          if (response.gameList.length < LIMIT_AFTER_PAGE_ONE) {
             setHasMore(false);
           }
         } else {
