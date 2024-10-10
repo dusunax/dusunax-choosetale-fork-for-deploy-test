@@ -1,5 +1,5 @@
 import { useRouter } from "next/navigation";
-import { Button } from "@/packages/ui/components/ui/Button";
+import Button from "@/components/common/button/Button";
 
 export default function GameStartButton({
   gameId,
@@ -16,10 +16,10 @@ export default function GameStartButton({
 
   return (
     <Button
-      className={` flex-1 h-full rounded-lg ${isPlaying ? "ct-unable" : "ct-fill"}`}
       onClick={handleRestartClick}
-    >
-      <span className="text-headline text-white">새로하기</span>
-    </Button>
+      isPlaying={isPlaying}
+      unable={false}
+      buttonText="새로하기"
+    />
   );
 }

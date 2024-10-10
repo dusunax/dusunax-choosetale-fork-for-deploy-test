@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Button from "@/components/common/button/Button";
 
 export default function GameContinueButton({
   gameId,
@@ -12,9 +13,9 @@ export default function GameContinueButton({
   return (
     <Link
       href={`/game-play/${playId}?gameId=${gameId}`}
-      className={`ct-fill flex-1 h-full rounded-lg ${className} content-center`}
+      className={`h-full flex ${className}`}
     >
-      <span className="text-headline text-white">이어하기</span>
+      <Button onClick={() => null} buttonText="이어하기" />
     </Link>
   );
 }
