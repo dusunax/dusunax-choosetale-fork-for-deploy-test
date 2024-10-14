@@ -1,16 +1,11 @@
 "use server";
 import { revalidateTag } from "next/cache";
 import type { HttpError } from "@choosetale/nestia-type";
-import { API_URL } from "@/config/config";
+import api from "@/app/api/axios/axios";
 
 export const deleteChoice = async (gameId: number, choiceId: number) => {
   try {
-    await fetch(`${API_URL}/game/${gameId}/choice/${choiceId}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    await api.delete(`/game/${gameId}/choice/${choiceId}`);
 
     revalidateTag("game-all");
     return { success: true };

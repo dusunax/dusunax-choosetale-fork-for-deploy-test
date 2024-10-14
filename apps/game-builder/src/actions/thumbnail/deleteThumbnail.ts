@@ -1,7 +1,7 @@
 "use server";
 import { revalidateTag } from "next/cache";
 import type { HttpError } from "@choosetale/nestia-type";
-import { API_URL } from "@/config/config";
+import api from "@/app/api/axios/axios";
 import type { ApiResponse, SuccessResponse } from "../action";
 
 export const deleteThumbnail = async (
@@ -9,17 +9,7 @@ export const deleteThumbnail = async (
   imageId: number
 ): Promise<ApiResponse<SuccessResponse>> => {
   try {
-    const response = await fetch(
-      `${API_URL}/game/${gameId}/thumbnail/${imageId}`,
-      {
-        method: "DELETE",
-      }
-    );
-
-    if (!response.ok) {
-      const errorData = (await response.json()) as { message: string };
-      throw new Error(errorData.message || "Failed to delete thumbnail");
-    }
+    await api.delete(`/game/${gameId}/thumbnail/${imageId}`);
 
     revalidateTag("game-info");
     return { success: true };

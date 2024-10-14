@@ -2,7 +2,7 @@
 import { revalidateTag } from "next/cache";
 import type { HttpError } from "@choosetale/nestia-type";
 import type { CreatePageResDto } from "@choosetale/nestia-type/lib/structures/CreatePageResDto";
-import { API_URL } from "@/config/config";
+import api from "@/app/api/axios/axios";
 import type { ApiResponse, SuccessResponse } from "../action";
 
 interface CreateSuccessResponse extends SuccessResponse {
@@ -14,14 +14,13 @@ export const createPage = async (
   pageData: { isEnding: boolean; content: string }
 ): Promise<ApiResponse<CreateSuccessResponse>> => {
   try {
-    const response = await fetch(`${API_URL}/game/${gameId}/page`, {
-      method: "POST",
+    const response = await api.post(`/game/${gameId}/page`, {
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(pageData),
     });
-    const page = (await response.json()) as CreatePageResDto;
+    const page = response.data as CreatePageResDto;
 
     revalidateTag("game-all");
     return { success: true, page };

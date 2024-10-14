@@ -1,7 +1,7 @@
 "use server";
 import { revalidateTag } from "next/cache";
 import type { HttpError } from "@choosetale/nestia-type";
-import { API_URL } from "@/config/config";
+import api from "@/app/api/axios/axios";
 import type { ApiResponse, SuccessResponse } from "../action";
 
 interface Choice {
@@ -23,18 +23,12 @@ export const getRecommendChoice = async (
   pageId: number
 ): Promise<ApiResponse<GetRecommendChoiceSuccessResponse>> => {
   try {
-    const response = await fetch(
-      `${API_URL}/game/${gameId}/page/${pageId}/recommend-choices`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
+    const response = await api.get(
+      `/game/${gameId}/page/${pageId}/recommend-choices`
     );
 
     revalidateTag("game-all");
-    const data = (await response.json()) as SocketMessage;
+    const data = response.data as SocketMessage;
     return { success: true, choices: data.message };
   } catch (error) {
     return { success: false, error: error as HttpError };

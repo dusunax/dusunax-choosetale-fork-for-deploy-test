@@ -2,7 +2,7 @@
 import { revalidateTag } from "next/cache";
 import type { HttpError } from "@choosetale/nestia-type";
 import type { UpdateGameReqDto } from "@choosetale/nestia-type/lib/structures/UpdateGameReqDto";
-import { API_URL } from "@/config/config";
+import api from "@/app/api/axios/axios";
 import type { ApiResponse, SuccessResponse } from "../action";
 
 interface UpdateSuccessResponse extends SuccessResponse {
@@ -14,14 +14,8 @@ export const updateGame = async (
   gameId: number
 ): Promise<ApiResponse<UpdateSuccessResponse>> => {
   try {
-    const response = await fetch(`${API_URL}/game/${gameId}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
-    const game = (await response.json()) as UpdateGameReqDto;
+    const response = await api.patch(`/game/${gameId}`, formData);
+    const game = response.data as UpdateGameReqDto;
 
     revalidateTag("game-info");
     return { success: true, game };

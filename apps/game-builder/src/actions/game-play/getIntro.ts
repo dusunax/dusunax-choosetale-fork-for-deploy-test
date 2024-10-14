@@ -1,6 +1,6 @@
 "use server";
 import type { HttpError } from "@choosetale/nestia-type";
-import { API_URL } from "@/config/config";
+import api from "@/app/api/axios/axios";
 import type { GameIntro } from "@/interface/customType";
 import type { ApiResponse, SuccessResponse } from "../action";
 
@@ -12,16 +12,11 @@ export const getGameIntro = async (
   gameId: number
 ): Promise<ApiResponse<ApiSuccessResponse>> => {
   try {
-    const response = await fetch(`${API_URL}/game-play/intro/${gameId}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      mode: "no-cors",
+    const response = await api.get(`/game-play/intro/${gameId}`, {
       next: { tags: ["game-intro"] },
     });
 
-    const intro = (await response.json()) as GameIntro;
+    const intro = response.data as GameIntro;
     return { success: true, intro };
   } catch (error) {
     return { success: false, error: error as HttpError };

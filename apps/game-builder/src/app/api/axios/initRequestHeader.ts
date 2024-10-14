@@ -1,4 +1,4 @@
-import { AxiosHeaders } from "axios";
+import { type AxiosHeaders } from "axios";
 import { cookies } from "next/headers";
 
 export default function initRequestHeader() {

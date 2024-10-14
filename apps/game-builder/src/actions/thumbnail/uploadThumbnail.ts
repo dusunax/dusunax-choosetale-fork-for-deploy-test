@@ -1,7 +1,7 @@
 "use server";
 import { revalidateTag } from "next/cache";
 import type { HttpError } from "@choosetale/nestia-type";
-import { API_URL } from "@/config/config";
+import api from "@/app/api/axios/axios";
 import type { ApiResponse, SuccessResponse } from "../action";
 
 interface UploadThumbnail {
@@ -20,17 +20,16 @@ export const uploadThumbnail = async (
   images: FormData
 ): Promise<ApiResponse<UploadThumbnailSuccessResponse>> => {
   try {
-    const response = await fetch(`${API_URL}/game/${gameId}/upload-thumbnail`, {
-      method: "POST",
-      body: images,
+    const response = await api.post(`/game/${gameId}/upload-thumbnail`, {
+      data: images,
     });
 
-    if (!response.ok) {
-      const errorData = (await response.json()) as { message: string };
-      throw new Error(errorData.message || "Failed to upload thumbnails");
+    if (!response.data) {
+      // const errorData = (await response.json()) as { message: string };
+      throw new Error("Failed to upload thumbnails");
     }
 
-    const data = (await response.json()) as UploadThumbnail[];
+    const data = response.data as UploadThumbnail[];
     if (!data) {
       throw new Error("Failed to upload thumbnails");
     }

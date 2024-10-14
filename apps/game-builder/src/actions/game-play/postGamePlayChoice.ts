@@ -1,7 +1,7 @@
 "use server";
 import type { HttpError } from "@choosetale/nestia-type";
-import { API_URL } from "@/config/config";
 import type { GamePlay } from "@/interface/customType";
+import api from "@/app/api/axios/axios";
 import type { ApiResponse, SuccessResponse } from "../action";
 
 interface ApiSuccessResponse extends SuccessResponse {
@@ -13,17 +13,11 @@ export const postGamePlayChoice = async (
   choiceId: number
 ): Promise<ApiResponse<ApiSuccessResponse>> => {
   try {
-    const response = await fetch(
-      `${API_URL}/game-play/play/${playId}/choice/${choiceId}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
+    const response = await api.post(
+      `/game-play/play/${playId}/choice/${choiceId}`
     );
 
-    const gamePlay = (await response.json()) as GamePlay;
+    const gamePlay = response.data as GamePlay;
     return { success: true, gamePlay };
   } catch (error) {
     return { success: false, error: error as HttpError };
