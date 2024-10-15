@@ -1,7 +1,7 @@
 "use server";
 import { revalidateTag } from "next/cache";
 import type { HttpError } from "@choosetale/nestia-type";
-import api from "@/app/api/axios/axios";
+import api from "@/lib/axios/axios";
 import type { ApiResponse, SuccessResponse } from "../action";
 
 interface Choice {

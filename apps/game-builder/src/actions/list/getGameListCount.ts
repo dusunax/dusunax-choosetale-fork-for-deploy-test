@@ -1,7 +1,7 @@
 "use server";
 import type { HttpError } from "@choosetale/nestia-type";
 import type { Genres } from "@choosetale/nestia-type/lib/structures/Genres";
-import api from "@/app/api/axios/axios";
+import api from "@/lib/axios/axios";
 import type { ApiResponse, SuccessResponse } from "../action";
 
 interface ApiSuccessResponse extends SuccessResponse {

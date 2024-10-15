@@ -2,7 +2,7 @@
 import type { HttpError } from "@choosetale/nestia-type";
 import type { GetAllGameResDto as GetGameAllResDto } from "@choosetale/nestia-type/lib/structures/GetAllGameResDto";
 import type { ApiErrorResponse, GameInfo } from "@/interface/customType";
-import api from "@/app/api/axios/axios";
+import api from "@/lib/axios/axios";
 import type { ApiResponse, SuccessResponse } from "../action";
 
 // --게임 정보 불러오기--

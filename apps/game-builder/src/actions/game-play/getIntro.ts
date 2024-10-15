@@ -1,6 +1,6 @@
 "use server";
 import type { HttpError } from "@choosetale/nestia-type";
-import api from "@/app/api/axios/axios";
+import api from "@/lib/axios/axios";
 import type { GameIntro } from "@/interface/customType";
 import type { ApiResponse, SuccessResponse } from "../action";
 

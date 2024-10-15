@@ -1,7 +1,7 @@
 "use server";
 import { revalidateTag } from "next/cache";
 import type { HttpError } from "@choosetale/nestia-type";
-import api from "@/app/api/axios/axios";
+import api from "@/lib/axios/axios";
 
 export const deletePage = async (gameId: number, pageId: number) => {
   try {
