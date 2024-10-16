@@ -14,6 +14,12 @@
       "@repo/ui/*": ["./src/packages/ui/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "global.d.ts"
+  ],
   "exclude": ["dist", "build", "node_modules"]
 }
