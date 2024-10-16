@@ -3,6 +3,8 @@ import type { Choice } from "@choosetale/nestia-type/lib/structures/Choice";
 import type { Page } from "@choosetale/nestia-type/lib/structures/Page";
 import type { UpdateGameReqDto } from "@choosetale/nestia-type/lib/structures/UpdateGameReqDto";
 import type { Genres } from "@choosetale/nestia-type/lib/structures/Genres";
+import type { Game } from "@choosetale/nestia-type/lib/structures/Game";
+import type { Play } from "@choosetale/nestia-type/lib/structures/Play";
 
 export interface ApiErrorResponse {
   statusCode: number;
@@ -197,3 +199,30 @@ export interface GameListGame {
 export type GameList = GameListGame[];
 
 export type SortType = "POPULAR" | "LATEST";
+
+export interface User {
+  id: number;
+  email: string;
+  nickname: string;
+  profileImage: {
+    url: string;
+  };
+  admin: {
+    isMaster: boolean;
+  };
+}
+
+export interface ContinuedGameGame
+  extends Pick<Game, "id" | "title" | "genre"> {
+  thumbnail: {
+    url: string;
+  };
+}
+export interface ContinuedGamePlay extends Pick<Play, "id" | "page"> {
+  createdAt: string;
+}
+
+export interface ContinuedGame {
+  game: ContinuedGameGame;
+  play: ContinuedGamePlay;
+}
