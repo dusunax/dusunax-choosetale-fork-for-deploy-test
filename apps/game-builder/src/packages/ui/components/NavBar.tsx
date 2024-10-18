@@ -14,7 +14,7 @@ export default function NavBar() {
     pathname.includes(path) ? "#22c55e" : "#777777";
 
   return (
-    <div className="w-full h-16 md:h-20 lg:h-24 shrink-0 bg-background-dark border-t border-grey-900">
+    <div className="w-full h-[4rem] shrink-0 bg-background-dark border-t border-grey-900">
       <NavigationMenu className="w-full h-full max-w-none px-8 md:px-10 lg:px-12">
         <ul className="w-full h-full flex justify-between items-center !mb-0">
           <NavigationMenuItem className="flex-1">

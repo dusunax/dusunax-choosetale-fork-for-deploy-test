@@ -7,7 +7,7 @@ import ThemedIconButton from "@themed/ThemedIconButton";
 import ThemedLabel from "@themed/ThemedLabel";
 import ThemedCard from "@themed/ThemedCard";
 import { type GameInfo } from "@/interface/customType";
-import robotIcon from "@asset/icons/robot-solid.svg";
+import robotIcon from "@asset/icons/robot-solid.svg?url";
 import useThumbnails from "@/hooks/useThumbnail";
 
 export default function Thumbnails({
@@ -75,7 +75,7 @@ export default function Thumbnails({
           {/* AI 이미지 생성 요청 */}
           <ThemedIconButton
             onClick={() => handleGenerate(gameId)}
-            className={isGenerating ? "animate-bounce" : ""}
+            className={isGenerating ? "animate-pulse" : ""}
           >
             <Image
               className="h-5 w-5 m-1 -translate-y-[2px]"

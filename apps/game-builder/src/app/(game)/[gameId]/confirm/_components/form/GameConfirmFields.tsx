@@ -15,7 +15,7 @@ import Thumbnails from "./Thumbnails";
 import GenresSelect from "./GenresSelect";
 
 const MAX_LENGTH = {
-  title: 50,
+  title: 30,
   description: 2000,
 } as const;
 
