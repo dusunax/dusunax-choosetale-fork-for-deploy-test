@@ -1,4 +1,4 @@
-import GameListFilters from "@/app/(game-list)/list/_components/game-list-filters/GameListFilters";
+import GameListFilters from "@/components/common/game/game-list-filters/GameListFilters";
 import { getEndedGame } from "@/actions/my-page/getEndedGame";
 import { formatGameListSearchParams } from "@/utils/formatGameListSearchParams";
 import { type EndedGameGroupDate } from "@/interface/customType";

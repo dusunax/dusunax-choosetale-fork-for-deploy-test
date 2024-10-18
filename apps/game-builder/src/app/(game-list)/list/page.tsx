@@ -4,8 +4,8 @@ import {
   formatGameListSearchParams,
   type GameListSearchParams,
 } from "@/utils/formatGameListSearchParams";
+import GameListFilters from "@/components/common/game/game-list-filters/GameListFilters";
 import GameList from "./_components/GameList";
-import GameListFilters from "./_components/game-list-filters/GameListFilters";
 
 export const dynamic = "force-dynamic";
 
