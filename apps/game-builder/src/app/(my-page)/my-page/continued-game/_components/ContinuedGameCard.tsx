@@ -1,7 +1,9 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { type ContinuedGame } from "@/interface/customType";
+import { formatDateString } from "@/utils/formatDatestring";
 import Button from "@/components/common/button/Button";
+import ErrorHandlingImage from "@components/common/image/ImageWithError";
 
 interface ContinuedGameCardProps {
   continuedGame: ContinuedGame;
@@ -20,27 +22,19 @@ export default function ContinuedGameCard({
       );
     }
   };
+  const TEMP_SRC = "";
 
   return (
     <div
       className={`w-[calc(50%-1.125rem)] shrink-0 flex flex-col ${className}`}
     >
       <div className="relative w-full pb-[100%] rounded-md overflow-hidden bg-grey-200">
-        {/* <ErrorHandlingImage
-            src={continuedGame.game.thumbnail.url}
-            alt="thumbnail"
-          /> */}
+        <ErrorHandlingImage src={TEMP_SRC} alt="thumbnail" />
+
         <div className="absolute w-full h-full bottom-0 bg-gradient-to-t from-[rgba(0,0,0,0.6)] to-transparent to-60% flex flex-col justify-end">
           <div className="flex flex-col gap-0.5 px-2 pb-2">
             <p className="text-grey-100 text-caption text-thin">
-              {new Date(continuedGame.play.createdAt)
-                .toLocaleDateString("ko-KR", {
-                  year: "numeric",
-                  month: "2-digit",
-                  day: "2-digit",
-                })
-                .replace(/\. /g, ".")
-                .replace(/\.$/, "")}
+              {formatDateString(continuedGame.play.createdAt)}
             </p>
             <p className="text-white text-body line-clamp-2">
               {continuedGame.game.title}
