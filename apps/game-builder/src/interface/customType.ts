@@ -244,6 +244,9 @@ export interface EndedGameGroupGame {
     id: number;
     title: string;
     genre: Genres;
+    thumbnail: {
+      url: string;
+    };
     totalEndingCount: number;
     endings: {
       playId: number;

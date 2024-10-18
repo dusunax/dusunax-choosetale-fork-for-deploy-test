@@ -22,14 +22,16 @@ export default function ContinuedGameCard({
       );
     }
   };
-  const TEMP_SRC = "";
 
   return (
     <div
       className={`w-[calc(50%-1.125rem)] shrink-0 flex flex-col ${className}`}
     >
       <div className="relative w-full pb-[100%] rounded-md overflow-hidden bg-grey-200">
-        <ErrorHandlingImage src={TEMP_SRC} alt="thumbnail" />
+        <ErrorHandlingImage
+          src={continuedGame.game.thumbnail.url}
+          alt={continuedGame.game.title}
+        />
 
         <div className="absolute w-full h-full bottom-0 bg-gradient-to-t from-[rgba(0,0,0,0.6)] to-transparent to-60% flex flex-col justify-end">
           <div className="flex flex-col gap-0.5 px-2 pb-2">

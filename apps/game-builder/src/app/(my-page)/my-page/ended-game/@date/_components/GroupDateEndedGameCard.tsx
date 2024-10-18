@@ -12,12 +12,14 @@ export default function GroupDateEndedGameCard({
   endedGame,
 }: EndedGameCardProps) {
   const { t } = useTranslation();
-  const TEMP_SRC = "";
 
   return (
     <div className="flex flex-col gap-2">
       <div className="relative w-full pb-[100%] rounded-md overflow-hidden bg-grey-200">
-        <ErrorHandlingImage src={TEMP_SRC} alt={endedGame.game.title} />
+        <ErrorHandlingImage
+          src={endedGame.game.thumbnail.url}
+          alt={endedGame.game.title}
+        />
       </div>
 
       <div className="h-[88px] flex flex-col justify-between">

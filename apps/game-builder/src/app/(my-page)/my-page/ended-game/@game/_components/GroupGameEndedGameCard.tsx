@@ -14,7 +14,6 @@ export default function GroupGameEndedGameCard({
   endedGame,
 }: EndedGameCardProps) {
   const { t } = useTranslation();
-  const TEMP_SRC = "";
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -28,7 +27,10 @@ export default function GroupGameEndedGameCard({
             </p>
           </div>
           <div className="relative w-full pb-[100%] rounded-md overflow-hidden bg-grey-200">
-            <ErrorHandlingImage src={TEMP_SRC} alt={endedGame.game.title} />
+            <ErrorHandlingImage
+              src={endedGame.game.thumbnail.url}
+              alt={endedGame.game.title}
+            />
           </div>
         </div>
 
