@@ -18,10 +18,10 @@ export default function NavBar() {
       <NavigationMenu className="w-full h-full max-w-none px-8 md:px-10 lg:px-12">
         <ul className="w-full h-full flex justify-between items-center !mb-0">
           <NavigationMenuItem className="flex-1">
-            <Link href="/list">
+            <Link href="/game-list">
               <div className="flex flex-col items-center gap-1">
-                <BookOpenIcon stroke={getIconColor("/list")} />
-                <span className={`${getItemColor("/list")} text-caption`}>
+                <BookOpenIcon stroke={getIconColor("/game-list")} />
+                <span className={`${getItemColor("/game-list")} text-caption`}>
                   게임
                 </span>
               </div>
@@ -30,7 +30,10 @@ export default function NavBar() {
           <NavigationMenuItem className="flex-1">
             <Link href="/builder/list">
               <div className="flex flex-col items-center gap-1">
-                <EditIcon stroke={getIconColor("/builder/list")} />
+                <EditIcon
+                  stroke={getIconColor("/builder/list")}
+                  className="ml-[1px]"
+                />
                 <span
                   className={`${getItemColor("/builder/list")} text-caption`}
                 >
