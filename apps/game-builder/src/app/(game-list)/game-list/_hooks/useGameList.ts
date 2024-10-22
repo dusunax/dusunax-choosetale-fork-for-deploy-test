@@ -4,11 +4,17 @@ import { useSearchParams } from "next/navigation";
 import api from "@/lib/axios/axios";
 import { type GameList as GameListType } from "@/interface/customType";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
+import {
+  formatGameListSearchParams,
+  GameListSearchParams,
+} from "@/utils/formatGameListSearchParams";
 
 export default function useGameList() {
   const searchParams = useSearchParams();
-  const genre = searchParams.get("genre");
-  const sort = searchParams.get("sort");
+  const formatSearchParams = formatGameListSearchParams(
+    Object.fromEntries(searchParams) as unknown as GameListSearchParams
+  );
+  const { genre, sort } = formatSearchParams;
   const [gameList, setGameList] = useState<GameListType>([]);
   const [error, setError] = useState<string | null>(null);
 
