@@ -10,7 +10,7 @@ export default function GameBuilderList({
   const games = builderGames.games;
   if (games.length === 0) {
     return (
-      <TextOverlayDiv text="현재 제작한 게임이 없어요.<br />게임을 제작해볼까요?" />
+      <TextOverlayDiv text="현재 게시한 게임이 없어요.<br />게임을 제작해볼까요?" />
     );
   }
 

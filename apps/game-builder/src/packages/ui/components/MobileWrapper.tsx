@@ -6,19 +6,13 @@ export default function MobileWrapper({
   children,
   hasNavBar = true,
 }: PropsWithChildren<{ hasNavBar?: boolean }>) {
-  const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(true);
+
+  const isMobile = () =>
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(hover: none) and (pointer: coarse)");
-
-    const checkTouchDevice = (e: MediaQueryListEvent) => {
-      setIsTouchDevice(e.matches);
-    };
-
-    setIsTouchDevice(mediaQuery.matches);
-    mediaQuery.addEventListener("change", checkTouchDevice);
-
-    return () => mediaQuery.removeEventListener("change", checkTouchDevice);
+    setIsTouchDevice(isMobile());
   }, []);
 
   return (
