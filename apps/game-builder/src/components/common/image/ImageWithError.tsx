@@ -43,7 +43,7 @@ export default function ImageWithError({
   }, [currentSrc, alt, sizes, handleImageError]);
 
   return (
-    <div className="w-full h-full">
+    <>
       {MemoizedImage}
       {(hasError || !currentSrc) && hasErrorDisplay && (
         <div className="absolute w-full h-full rounded-md border border-red-500 flex justify-center items-center z-10">
@@ -51,6 +51,6 @@ export default function ImageWithError({
           <div className="w-[42px] border-b-2 absolute border-[#aaaaaa] -rotate-45" />
         </div>
       )}
-    </div>
+    </>
   );
 }

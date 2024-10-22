@@ -21,7 +21,7 @@ export default function GameListCard({ gameData }: { gameData: GameListGame }) {
 
   return (
     <div>
-      <AspectRatio ratio={1 / 1} className="mb-2">
+      <AspectRatio ratio={1 / 1} className="mb-2 rounded-lg overflow-hidden">
         <ImageWithError
           src={thumbnail?.url}
           alt="썸네일 이미지"
