@@ -6,7 +6,7 @@ import { type GameList as GameListType } from "@/interface/customType";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import {
   formatGameListSearchParams,
-  GameListSearchParams,
+  type GameListSearchParams,
 } from "@/utils/formatGameListSearchParams";
 
 export default function useGameList() {

@@ -8,7 +8,7 @@ export default function MyPageNav() {
         href="/my-page/ended-game"
         className="text-title1 h-12 flex items-center justify-between gap-3"
       >
-        <p className="text-headline text-white">내가 본 엔딩</p>
+        <p className="text-title1 text-white font-semibold">내가 본 엔딩</p>
         <CheckCircledIcon stroke="#a4a4a4" />
       </Link>
     </nav>

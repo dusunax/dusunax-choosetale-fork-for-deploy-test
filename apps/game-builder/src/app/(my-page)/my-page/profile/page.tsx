@@ -9,8 +9,8 @@ export default async function Page() {
   return (
     <div className="h-full flex flex-col pb-20">
       <TopNav title="프로필 수정" hasBackButton page="/my-page" />
-      <EditProfileImage user={user} />
-      <EditNickname />
+      {user && <EditProfileImage user={user} />}
+      {user && <EditNickname />}
     </div>
   );
 }
