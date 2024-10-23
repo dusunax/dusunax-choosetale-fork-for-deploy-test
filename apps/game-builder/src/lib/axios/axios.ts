@@ -20,15 +20,30 @@ interface CustomAxiosInstance extends AxiosInstance {
 
 const api = axios.create({
   baseURL: API_URL,
+  withCredentials: true,
 });
 
-// 헤더에 쿠키를 넣어 보내기!
-api.interceptors.request.use((config) => {
-  const connectSid = cookies().get("connect.sid")?.value;
-  if (connectSid) {
-    config.headers.Cookie = `connect.sid=${connectSid}`;
+api.interceptors.request.use(
+  (config) => {
+    if (typeof window !== "undefined") {
+      const browserCookies = document.cookie;
+      if (browserCookies) {
+        config.headers["Cookie"] = browserCookies;
+      }
+    } else {
+      const cookieStore = cookies();
+      const allCookies = cookieStore.getAll();
+      if (allCookies.length > 0) {
+        config.headers["Cookie"] = allCookies
+          .map((cookie) => `${cookie.name}=${cookie.value}`)
+          .join("; ");
+      }
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
   }
-  return config;
-});
+);
 
 export default api as CustomAxiosInstance;
