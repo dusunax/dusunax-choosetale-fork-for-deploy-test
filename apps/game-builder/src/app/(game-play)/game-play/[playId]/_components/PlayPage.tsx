@@ -12,7 +12,7 @@ export default function PlayPage({
   playId: number;
   pageId: number;
 }) {
-  const { page, isChoiceSending, isEnding, isLoading, selectChoice } =
+  const { page, isChoiceSending, isEndingPage, isLoading, selectChoice } =
     useGamePlay({
       pageId,
       playId,
@@ -23,10 +23,10 @@ export default function PlayPage({
     return null;
   }
   if (!page) {
-    return <>페이지가 존재하지 않습니다.</>;
+    return null;
   }
 
-  if (isEnding) {
+  if (isEndingPage) {
     return (
       <>
         <div className="pt-6 pb-8 min-h-24">

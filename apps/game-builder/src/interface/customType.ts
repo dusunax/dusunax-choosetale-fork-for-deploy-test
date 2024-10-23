@@ -116,6 +116,7 @@ export interface GamePlay {
   playId: number;
   page?: {
     id: number;
+    isEnding: boolean;
   };
 }
 

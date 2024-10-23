@@ -21,7 +21,7 @@ export default function useGamePlay({
   const playIdRef = useRef(playId);
   const [isChoiceSending, setIsChoiceSending] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const isEnding = page?.isEnding;
+  const isEndingPageRef = useRef(false);
 
   const getCurrentPage = useCallback(
     async (props: { gameId: number; currentPageId: number }) => {
@@ -34,10 +34,6 @@ export default function useGamePlay({
         if (!response.success) {
           throw new Error(response.error.message);
         }
-        if (!response.gamePlayPage.page) {
-          return false;
-        }
-
         response.success && setPage(response.gamePlayPage.page);
       } catch (error) {
         throw new Error("게임을 불러오는 중 오류가 발생했습니다.");
@@ -76,6 +72,8 @@ export default function useGamePlay({
       if (!response.success) {
         throw new Error(response.error.message);
       }
+      isEndingPageRef.current = response.gamePlay.page?.isEnding ?? false;
+
       const nextPageId = response.gamePlay.page?.id;
       nextPageId && setCurrentPageId(nextPageId);
     } catch (error) {
@@ -86,11 +84,13 @@ export default function useGamePlay({
   };
 
   useEffect(() => {
-    async function gamePlay() {
+    function gamePlay() {
       setIsLoading(true);
+
       try {
-        const success = await getCurrentPage({ gameId, currentPageId });
-        !success && getEndingPage({ playId });
+        isEndingPageRef.current
+          ? getEndingPage({ playId })
+          : getCurrentPage({ gameId, currentPageId });
       } catch (error) {
         notFound();
       } finally {
@@ -105,7 +105,7 @@ export default function useGamePlay({
     page,
     currentPageId,
     isChoiceSending,
-    isEnding,
+    isEndingPage: isEndingPageRef.current,
     isLoading,
     getCurrentPage,
     getEndingPage,
