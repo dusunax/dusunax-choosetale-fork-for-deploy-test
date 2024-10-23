@@ -2,19 +2,26 @@ import { type Genres } from "@choosetale/nestia-type/lib/structures/Genres";
 import { type SortType } from "@/interface/customType";
 
 export interface GameListSearchParams {
-  genre: string;
+  genre?: Genres | "ALL";
   sort?: SortType;
+  page?: number;
+  limit?: number;
 }
 
 export type FormattedSearchParams = ReturnType<
   typeof formatGameListSearchParams
 >;
 
-export const formatGameListSearchParams = (prev: GameListSearchParams) => {
-  const currentGenre = prev?.genre ?? "ALL";
-
+export const formatGameListSearchParams = ({
+  genre = "ALL",
+  sort = "LATEST",
+  page = 1,
+  limit = 6,
+}: GameListSearchParams) => {
   return {
-    genre: currentGenre.toLocaleUpperCase() as Genres,
-    sort: prev.sort || "LATEST",
+    genre,
+    sort,
+    page,
+    limit,
   };
 };

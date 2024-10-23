@@ -17,12 +17,12 @@ export interface Thumbnail {
   url: string;
 }
 
-export interface GameInfo extends UpdateGameReqDto {
+export interface GameInfo extends Omit<UpdateGameReqDto, "genre"> {
   id: number;
   title: string;
   description: string;
   isPrivate: boolean;
-  genre: Genres;
+  genre: Genres | "ALL";
   thumbnails: Thumbnail[];
   createdAt: string;
   counts: {

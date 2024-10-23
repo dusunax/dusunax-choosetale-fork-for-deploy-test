@@ -3,9 +3,9 @@ import {
   formatGameListSearchParams,
   type GameListSearchParams,
 } from "@/utils/formatGameListSearchParams";
+import { getGameList } from "@/actions/list/getGameList";
 import GameListFilters from "@/components/common/game/game-list-filters/GameListFilters";
 import GameList from "./_components/GameList";
-import { getGameList } from "@/actions/list/getGameList";
 
 export const dynamic = "force-dynamic";
 
@@ -16,12 +16,7 @@ export interface GameListParams {
 export default async function Page({ searchParams }: GameListParams) {
   const formattedSearchParams = formatGameListSearchParams(searchParams);
   const connectSid = cookies().get("connect.sid")?.value;
-  const response = await getGameList({
-    page: 1,
-    limit: 6,
-    genre: formattedSearchParams.genre,
-    sort: formattedSearchParams.sort,
-  });
+  const response = await getGameList(formattedSearchParams);
 
   return (
     <div className="h-[calc(100vh-8rem)] flex flex-col mx-5 pt-4">

@@ -28,13 +28,13 @@ api.interceptors.request.use(
     if (typeof window !== "undefined") {
       const browserCookies = document.cookie;
       if (browserCookies) {
-        config.headers["Cookie"] = browserCookies;
+        config.headers.Cookie = browserCookies;
       }
     } else {
       const cookieStore = cookies();
       const allCookies = cookieStore.getAll();
       if (allCookies.length > 0) {
-        config.headers["Cookie"] = allCookies
+        config.headers.Cookie = allCookies
           .map((cookie) => `${cookie.name}=${cookie.value}`)
           .join("; ");
       }

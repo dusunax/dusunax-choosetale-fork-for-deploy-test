@@ -11,7 +11,7 @@ export const getGameList = ({
 }: {
   page: number;
   limit?: number;
-  genre: Genres;
+  genre: Genres | "ALL";
   sort: SortType;
 }): Promise<{ data: GameList }> => {
   return api.get("/game-play/list", {
