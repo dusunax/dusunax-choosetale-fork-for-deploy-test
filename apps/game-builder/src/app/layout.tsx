@@ -28,15 +28,15 @@ export default async function RootLayout({
   return (
     <html lang="ko">
       <body className={inter.className}>
-        <LocaleProvider dict={dict}>
-          <CSSThemeProvider>
+        <SessionProvider>
+          <AuthRedirect />
+          <LocaleProvider dict={dict}>
+            <CSSThemeProvider>
             <Toaster />
-            <SessionProvider>
-              <AuthRedirect />
               {children}
-            </SessionProvider>
           </CSSThemeProvider>
-        </LocaleProvider>
+          </LocaleProvider>
+        </SessionProvider>
       </body>
     </html>
   );

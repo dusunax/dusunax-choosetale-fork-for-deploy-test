@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { signOut } from "next-auth/react";
+import { deleteCookie } from "cookies-next";
 import { userLogOut } from "@/actions/user/userLogOut";
 import ConfirmModal from "./Confirm";
 
@@ -10,8 +11,7 @@ export default function FooterButtons() {
 
   const handleLogout = async () => {
     await userLogOut();
-    document.cookie =
-      "connect.sid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    deleteCookie("connect.sid");
     signOut();
     setIsLogoutOpen(false);
   };
