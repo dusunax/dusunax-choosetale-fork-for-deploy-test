@@ -1,6 +1,6 @@
 import ImageWithError from "@/components/common/image/ImageWithError";
-import SocialLogin from "./_components/SocialLogin";
 import mainImage from "@/asset/images/main-image.png";
+import SocialLogin from "./_components/SocialLogin";
 
 export default function Page() {
   return (
