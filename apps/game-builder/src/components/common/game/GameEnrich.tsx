@@ -37,31 +37,23 @@ export default function GameEnrich({
         <DateDisplay date={lastUpdatedAt} />
       </div>
     ),
-    expectPlayTime && (
-      <div
-        key="expectPlayTime"
-        className="text-xs flex items-center gap-2"
-        title="예상 게임 시간"
-      >
-        <ClockIcon color="#28c362" />
-        예상 게임 시간: {expectPlayTime}분
-      </div>
-    ),
-    totalEnding && totalPlayCount && completedEnding && (
-      <div
-        key="endingDetails"
-        className="flex gap-2 flex-wrap"
-        title="게임 상세"
-      >
-        <InfoCircledIcon color="#28c362" />
-        <TextWithCounts text="플레이 횟수" counts={totalPlayCount} />
-        <TextWithNumberRange
-          text="엔딩"
-          value={completedEnding}
-          max={totalEnding}
-        />
-      </div>
-    ),
+    <div
+      key="expectPlayTime"
+      className="text-xs flex items-center gap-2"
+      title="예상 게임 시간"
+    >
+      <ClockIcon color="#28c362" />
+      예상 게임 시간: {expectPlayTime || 0}분
+    </div>,
+    <div key="endingDetails" className="flex gap-2 flex-wrap" title="게임 상세">
+      <InfoCircledIcon color="#28c362" />
+      <TextWithCounts text="플레이 횟수" counts={totalPlayCount || 0} />
+      <TextWithNumberRange
+        text="엔딩"
+        value={completedEnding || 0}
+        max={totalEnding || 0}
+      />
+    </div>,
   ];
 
   const orderMap = {
