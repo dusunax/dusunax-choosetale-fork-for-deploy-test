@@ -18,13 +18,7 @@ export const createChoice = async (
     if (choiceData.childPageId < 0)
       throw new Error("Child page id is required");
 
-    const response = await api.post(`/game/${gameId}/choice`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(choiceData),
-    });
+    const response = await api.post(`/game/${gameId}/choice`, choiceData);
     const choiceRes = response.data as CreateChoiceResDto | ApiErrorResponse;
 
     if ("statusCode" in choiceRes) {

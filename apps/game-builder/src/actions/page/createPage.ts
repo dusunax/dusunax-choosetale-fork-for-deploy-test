@@ -14,12 +14,7 @@ export const createPage = async (
   pageData: { isEnding: boolean; content: string }
 ): Promise<ApiResponse<CreateSuccessResponse>> => {
   try {
-    const response = await api.post(`/game/${gameId}/page`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(pageData),
-    });
+    const response = await api.post(`/game/${gameId}/page`, pageData);
     const page = response.data as CreatePageResDto;
 
     revalidateTag("game-all");
