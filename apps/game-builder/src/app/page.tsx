@@ -1,15 +1,15 @@
-import BackgroundWapper from "@/components/common/BackgroundWapper";
 import MobileWrapper from "@/packages/ui/components/MobileWrapper";
-import Landing from "@/components/temp/landing/Landing";
+import ImageWithError from "@/components/common/image/ImageWithError";
+import splashImage from "@/asset/images/splash.png";
 
 export default function Page() {
   return (
     <MobileWrapper>
-      <BackgroundWapper>
-        <main className="h-full flex-1 flex items-center justify-center">
-          <Landing />
-        </main>
-      </BackgroundWapper>
+      <div className="h-full flex-1 bg-background-dark">
+        <div className="relative w-full h-full animate-pulse">
+          <ImageWithError src={splashImage.src} alt="ChooseTale" priority />
+        </div>
+      </div>
     </MobileWrapper>
   );
 }
