@@ -1,6 +1,8 @@
 import { type GameBuilderGame } from "@/interface/customType";
 import TextOverlayDiv from "@/components/common/TextOverlayDiv";
-import GameBuilderCard from "./GameBuilderCard";
+import GameBuilderCard from "../../_components/GameBuilderCard";
+import GameBuilderContent from "../../_components/GameBuilderContent";
+import GameBuilderHeader from "./GameBuilderHeader";
 
 export default function GameBuilderList({
   builderGames,
@@ -17,7 +19,12 @@ export default function GameBuilderList({
   return (
     <div className="flex flex-col gap-4">
       {games.map((game) => (
-        <GameBuilderCard key={game.id} game={game} />
+        <GameBuilderCard key={game.id} game={game}>
+          <>
+            <GameBuilderHeader game={game} />
+            <GameBuilderContent game={game} />
+          </>
+        </GameBuilderCard>
       ))}
     </div>
   );
