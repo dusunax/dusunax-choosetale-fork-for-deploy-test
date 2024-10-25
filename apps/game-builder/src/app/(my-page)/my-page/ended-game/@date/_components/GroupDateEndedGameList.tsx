@@ -10,8 +10,11 @@ export default function GroupDateEndedGameList({
 }: EndedGameListProps) {
   return (
     <div className="grid grid-cols-2 gap-2 sm:gap-3 !gap-y-6">
-      {endedGame.map((game) => (
-        <GroupDateEndedGameCard endedGame={game} key={game.game.id} />
+      {endedGame.map((game, index) => (
+        <GroupDateEndedGameCard
+          endedGame={game}
+          key={`${game.game.id}-${index}`}
+        />
       ))}
     </div>
   );
