@@ -80,7 +80,7 @@ export default function GroupGameEndedGameCard({
                 </p>
                 <div className="ml-4 flex flex-col">
                   <p className="body text-green-500 font-semibold">
-                    {ending.playId}번 엔딩
+                    {ending.endingNumber}번 엔딩
                   </p>
                   <p className="body text-grey-100 font-normal">
                     {ending.abridgement}
