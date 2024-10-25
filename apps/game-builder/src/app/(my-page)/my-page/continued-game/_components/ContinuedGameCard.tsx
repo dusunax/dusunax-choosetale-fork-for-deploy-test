@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import { type ContinuedGame } from "@/interface/customType";
 import { formatDateString } from "@/utils/formatDatestring";
+import { removeEditorTags } from "@/utils/removeEditorTags";
 import Button from "@/components/common/button/Button";
 import ImageWithError from "@components/common/image/ImageWithError";
 
@@ -48,7 +49,7 @@ export default function ContinuedGameCard({
       <div className="flex-1 flex flex-col justify-between">
         <div className="flex-1 flex items-center">
           <p className="text-body text-green-500 truncate text-ellipsis px-[1px] py-1.5">
-            {continuedGame.play.page?.abridgement}
+            {removeEditorTags(continuedGame.play.page?.abridgement ?? "")}
           </p>
         </div>
         <div className="h-10 flex">

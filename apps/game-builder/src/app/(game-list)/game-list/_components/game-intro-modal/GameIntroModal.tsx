@@ -15,6 +15,7 @@ import { xIcon } from "@/asset/icons";
 import GameContinueButton from "@/app/(game-list)/game-list/_components/GameContinueButton";
 import GameStartButton from "@/app/(game-list)/game-list/_components/GameStartButton";
 import ImageWithError from "@/components/common/image/ImageWithError";
+import { removeEditorTags } from "@/utils/removeEditorTags";
 import PlayerImages from "../game-list-card/PlayerImages";
 import CompleteBadge from "../CompleteBadge";
 import GameIntroBadge from "./GameIntroBadge";
@@ -148,7 +149,7 @@ export default function GameIntroModal({
         <div className="px-[1px]">
           <p className="headline break-keep">{game.title}</p>
           <p className="body text-grey-100 break-keep h-10 line-clamp-2 mb-2">
-            {gameDescription}
+            {removeEditorTags(gameDescription ?? "")}
           </p>
           <p className="caption text-grey-100">
             made by {gameData.publisher.nickname}
@@ -173,7 +174,7 @@ export default function GameIntroModal({
                     {lastPageAbridgement ? (
                       <>
                         <span className="flex-1 line-clamp-1">
-                          {lastPageAbridgement}
+                          {removeEditorTags(lastPageAbridgement)}
                         </span>
                         <span>까지 했어요</span>
                       </>

@@ -4,6 +4,7 @@ import { getGameIntro } from "@/actions/game-play/getIntro";
 import { type GameIntro } from "@/interface/customType";
 import GameRestartButton from "@components/common/button/GameRestartButton";
 import GameEnrich from "@/components/common/game/GameEnrich";
+import { removeEditorTags } from "@/utils/removeEditorTags";
 import { type GamePageParams } from "../page";
 import GamePlayChoosenPages from "./_components/GamePlayChoosenPages";
 
@@ -32,13 +33,12 @@ export default async function Page({ params, searchParams }: GamePageParams) {
 
   return (
     <section className="my-10">
-      <p className="mb-2">엔딩</p>
+      <p className="text-xl mb-2">엔딩</p>
       <h1 className="text-2xl mb-6">
-        {gameInfoResponse.result.endingPage.abridgement}
+        {removeEditorTags(gameInfoResponse.result.endingPage.abridgement)}
       </h1>
 
       <hr className="border-black my-4 pointer-none" />
-      <h2 className="text-md mb-1">선택한 페이지:</h2>
       {choosenPages.map((page) => (
         <GamePlayChoosenPages key={page.id} page={page} />
       ))}

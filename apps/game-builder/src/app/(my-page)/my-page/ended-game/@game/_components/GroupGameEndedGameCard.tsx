@@ -20,7 +20,7 @@ export default function GroupGameEndedGameCard({
   return (
     <div className="border border-grey-800 rounded-md overflow-hidden">
       <button
-        className="flex gap-3 p-4 cursor-pointer"
+        className="w-full flex gap-3 p-4 cursor-pointer"
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
@@ -43,7 +43,7 @@ export default function GroupGameEndedGameCard({
           </div>
         </div>
 
-        <div className="h-[5.5rem] flex-1 flex flex-col justify-end">
+        <div className="h-[5.5rem] flex-1 flex flex-col justify-end text-left">
           <div className="h-[3.75rem] pt-2">
             <p className="headline line-clamp-2">{endedGame.game.title}</p>
             <p className="caption text-grey-200 font-normal">
@@ -74,11 +74,12 @@ export default function GroupGameEndedGameCard({
             >
               <Link
                 href={`/game-play/${ending.playId}/result?gameId=${endedGame.game.id}`}
+                className="flex gap-6"
               >
                 <p className="w-[4.375rem] text-body text-grey-200 font-normal">
                   {formatDateString(ending.reachedEndingAt)}
                 </p>
-                <div className="ml-4 flex flex-col">
+                <div className="flex flex-col">
                   <p className="body text-green-500 font-semibold">
                     {ending.endingNumber}번 엔딩
                   </p>
