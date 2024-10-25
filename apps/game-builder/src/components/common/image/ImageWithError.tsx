@@ -2,7 +2,10 @@
 import { type SyntheticEvent, useState, useMemo } from "react";
 import Image, { type ImageProps } from "next/image";
 import { ImageIcon } from "@radix-ui/react-icons";
-import { getPlaceholderImageOnError } from "@/utils/getPlaceholderImageOnError";
+import {
+  getPlaceholderImageOnError,
+  placeholderSrc,
+} from "@/utils/getPlaceholderImageOnError";
 
 interface ErrorHandlingImageProps extends Omit<ImageProps, "src"> {
   src: string | null;
@@ -32,7 +35,7 @@ export default function ImageWithError({
   const MemoizedImage = useMemo(() => {
     return (
       <Image
-        src={currentSrc}
+        src={currentSrc || placeholderSrc}
         alt={alt}
         fill
         sizes={sizes}
