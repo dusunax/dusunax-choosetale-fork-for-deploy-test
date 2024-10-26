@@ -17,7 +17,7 @@ import { removeEditorTags } from "@/utils/removeEditorTags";
 import ThemedCard from "@themed/ThemedCard";
 import ThemedIconButton from "@themed/ThemedIconButton";
 import robotIcon from "@asset/icons/robot-solid.svg?url";
-import GameEditDraw from "@/app/(game)/[gameId]/builder/_components/edit/GameEditDraw";
+import GameEditDraw from "@/app/(game)/game/[gameId]/builder/_components/edit/GameEditDraw";
 import DateDisplayRelative from "@/components/common/text/DateDisplayRelative";
 import DotIndicator from "./DotIndicator";
 

@@ -13,7 +13,7 @@ export default function CompleteBadge({
 }) {
   if (reachedEndingPlayCount === 0) return null;
 
-  const isAllCleared = reachedEndingPlayCount > totalEndingCount;
+  const isAllCleared = reachedEndingPlayCount >= totalEndingCount;
   if (isAllCleared) {
     return (
       <Image src={completeBadgeAllIcon} alt="완료 배지" className={className} />

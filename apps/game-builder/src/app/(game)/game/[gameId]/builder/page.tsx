@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { getGameAllById } from "@/actions/game/getGame";
-import GameBuilder from "@/app/(game)/[gameId]/builder/_components/GameBuilder";
+import GameBuilder from "@/app/(game)/game/[gameId]/builder/_components/GameBuilder";
 import TopNav from "@/components/common/partial/TopNav";
 import { NextButton } from "@/components/common/button/NextButton";
 import { type GameParams } from "../page";

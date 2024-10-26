@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useForm, useWatch } from "react-hook-form";
 import { type FormattedSearchParams } from "@/utils/formatGameListSearchParams";
 import { type GameInfo } from "@/interface/customType";
-import GenresSelect from "@/app/(game)/[gameId]/confirm/_components/form/GenresSelect";
+import GenresSelect from "@/app/(game)/game/[gameId]/confirm/_components/form/GenresSelect";
 
 interface GameListSelectProps {
   searchParams: FormattedSearchParams;

@@ -3,7 +3,7 @@ import { PlusCircledIcon } from "@radix-ui/react-icons";
 import useChoices from "@/hooks/useChoices";
 import type useGameData from "@/hooks/useGameData";
 import type { ChoiceType, NewChoice, PageType } from "@/interface/customType";
-import ChoiceCard from "@/app/(game)/[gameId]/builder/_components/choice/ChoiceCard";
+import ChoiceCard from "@/app/(game)/game/[gameId]/builder/_components/choice/ChoiceCard";
 import GameSubmitButton from "@/components/common/button/GameSubmitButton";
 import PageCard from "./page/PageCard";
 import UnLinkedPages from "./UnLinkedPages";

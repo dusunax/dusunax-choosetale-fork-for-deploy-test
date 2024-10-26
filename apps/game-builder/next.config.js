@@ -31,19 +31,6 @@ const nextConfig = {
     process.env.NODE_ENV === "production"
       ? "https://choosetale-game.vercel.app"
       : "",
-  async rewrites() {
-    const rewrites = [
-      {
-        source: "/game",
-        destination: "/",
-      },
-      {
-        source: "/game/:path*",
-        destination: "/:path*",
-      },
-    ];
-    return rewrites;
-  },
   images: {
     remotePatterns: [
       {

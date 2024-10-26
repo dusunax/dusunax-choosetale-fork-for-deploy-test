@@ -7,7 +7,7 @@ import type { GameInfo } from "@/interface/customType";
 import { updateGame } from "@/actions/game/updateGame";
 import { isValueEmpty } from "@/components/common/editor/contant";
 import SubmitButton from "@components/common/button/SubmitButton";
-import GameConfirmFields from "@/app/(game)/[gameId]/confirm/_components/form/GameConfirmFields";
+import GameConfirmFields from "@/app/(game)/game/[gameId]/confirm/_components/form/GameConfirmFields";
 
 export default function ConfirmGame({
   gameInfoData,

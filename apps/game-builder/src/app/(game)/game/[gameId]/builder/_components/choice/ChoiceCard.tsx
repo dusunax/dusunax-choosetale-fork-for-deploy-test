@@ -16,7 +16,7 @@ import ThemedCard from "@themed/ThemedCard";
 import ThemedIconButton from "@themed/ThemedIconButton";
 import ThemedInputField from "@/components/theme/ui/ThemedInputField";
 import ThemedTextareaField from "@/components/theme/ui/ThemedTextareaField";
-import NewPage from "@/app/(game)/[gameId]/builder/_components/new-page/NewPage";
+import NewPage from "@/app/(game)/game/[gameId]/builder/_components/new-page/NewPage";
 import DotIndicator from "./DotIndicator";
 import { StaticChoice } from "./StaticChoice";
 
