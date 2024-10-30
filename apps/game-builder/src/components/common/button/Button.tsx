@@ -3,21 +3,21 @@ import { Button as ButtonUi } from "@/packages/ui/components/ui/Button";
 export default function Button({
   onClick,
   buttonText,
-  isPlaying = false,
+  dark = false,
   unable = false,
   className = "",
   type = "button",
 }: {
   onClick?: () => void;
   buttonText: string;
-  isPlaying?: boolean;
+  dark?: boolean;
   unable?: boolean;
   className?: string;
   type?: "submit" | "button" | "reset";
 }) {
   return (
     <ButtonUi
-      className={`flex-1 h-full rounded-md ${isPlaying || unable ? "ct-unable" : "ct-fill"} ${className}`}
+      className={`flex-1 h-full rounded-md ${dark || unable ? "ct-unable" : "ct-fill"} ${className}`}
       onClick={onClick && onClick}
       type={type}
     >

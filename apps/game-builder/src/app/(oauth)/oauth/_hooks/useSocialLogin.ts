@@ -22,9 +22,16 @@ export default function useSocialLogin() {
 
   useEffect(() => {
     if (sessionWhenLoggin) {
-      const { loggin } = sessionWhenLoggin;
+      const { loggin, isFirstLogin } = sessionWhenLoggin;
       if (loggin && !sidCookie) logoutHandler();
-      if (loggin && sidCookie) router.push("/game-list");
+      if (loggin && sidCookie) {
+
+        if (!isFirstLogin) {
+          router.push("/onboarding");
+        } else {
+          router.push("/game-list");
+        }
+      }
     }
   }, [sessionWhenLoggin, sidCookie, router]);
 

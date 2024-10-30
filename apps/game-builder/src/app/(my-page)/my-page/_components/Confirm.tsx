@@ -41,7 +41,7 @@ export default function ConfirmModal({
           <Button
             onClick={onCancel}
             buttonText="취소하기"
-            isPlaying
+            dark
             className="w-1/2 shrink-0"
           />
           <Button

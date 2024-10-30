@@ -17,7 +17,7 @@ export default function GameStartButton({
   return (
     <Button
       onClick={handleRestartClick}
-      isPlaying={isPlaying}
+      dark={isPlaying}
       unable={false}
       buttonText="새로하기"
     />

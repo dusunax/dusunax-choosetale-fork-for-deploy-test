@@ -6,6 +6,7 @@ import type { ApiResponse, SuccessResponse } from "../action";
 
 interface CreateSuccessResponse extends SuccessResponse {
   cookie: string[];
+  isFirstLogin: boolean;
 }
 
 export const userLogin = async (
@@ -21,12 +22,13 @@ export const userLogin = async (
       type,
     });
     const cookie = response.headers["set-cookie"];
+    const isFirstLogin = response.data as { isFirstLogin: boolean };
 
     if (!cookie) {
       throw new Error("Failed to login");
     }
 
-    return { success: true, cookie };
+    return { success: true, cookie, ...isFirstLogin };
   } catch (error) {
     return { success: false, error: error as HttpError };
   }

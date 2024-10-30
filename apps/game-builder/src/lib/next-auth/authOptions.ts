@@ -4,8 +4,13 @@ import GoogleProvider from "next-auth/providers/google";
 import { userLogin } from "@/actions/user/userLogIn";
 import { AUTH_SECRET } from "@/config/config";
 
-type AccountWhenLoggin = Account & { loggin: boolean };
-export type SessionWhenLoggin = Session & { loggin: boolean };
+interface Addition {
+  loggin: boolean;
+  isFirstLogin: boolean;
+}
+
+type AccountWhenLoggin = Account & Addition;
+export type SessionWhenLoggin = Session & Addition;
 
 export const authOptions: NextAuthOptions = {
   secret: AUTH_SECRET,
@@ -23,6 +28,7 @@ export const authOptions: NextAuthOptions = {
           if (!res.success || !res.cookie) {
             return false;
           }
+          account.isFirstLogin = res.isFirstLogin;
 
           const connectSidCookie = res.cookie[0];
           if (connectSidCookie) {
@@ -43,11 +49,16 @@ export const authOptions: NextAuthOptions = {
     jwt({ token, account }) {
       if (account) {
         token.loggin = account.loggin;
+        token.isFirstLogin = account.isFirstLogin;
       }
       return token;
     },
     session({ session, token }) {
-      return { ...session, loggin: token.loggin } as SessionWhenLoggin;
+      return {
+        ...session,
+        loggin: token.loggin,
+        isFirstLogin: token.isFirstLogin,
+      } as SessionWhenLoggin;
     },
   },
 };
