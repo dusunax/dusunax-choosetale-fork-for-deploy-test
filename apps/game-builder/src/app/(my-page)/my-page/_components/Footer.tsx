@@ -3,11 +3,13 @@ import { useState } from "react";
 import { signOut } from "next-auth/react";
 import { deleteCookie } from "cookies-next";
 import { userLogOut } from "@/actions/user/userLogOut";
+import deleteUser from "@/actions/user/deleteUser";
 import ConfirmModal from "./Confirm";
 
 export default function FooterButtons() {
   const [isLogoutOpen, setIsLogoutOpen] = useState(false);
   const [isWithdrawalOpen, setIsWithdrawalOpen] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
   const handleLogout = async () => {
     await userLogOut();
@@ -17,8 +19,13 @@ export default function FooterButtons() {
   };
 
   const handleWithdrawal = () => {
-    // TODO: 회원탈퇴 기능 추가
-    setIsWithdrawalOpen(false);
+    setHasError(false);
+    try {
+      deleteUser();
+      setIsWithdrawalOpen(false);
+    } catch (err) {
+      setHasError(true);
+    }
   };
 
   return (
@@ -55,6 +62,7 @@ export default function FooterButtons() {
         buttonText="탈퇴하기"
         onConfirm={handleWithdrawal}
         onCancel={() => setIsWithdrawalOpen(false)}
+        hasError={hasError}
       />
     </div>
   );

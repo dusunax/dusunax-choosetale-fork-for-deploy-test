@@ -7,6 +7,7 @@ export default function ConfirmModal({
   buttonText,
   onConfirm,
   onCancel,
+  hasError = false,
 }: {
   isOpen: boolean;
   title: string;
@@ -14,6 +15,7 @@ export default function ConfirmModal({
   buttonText: string;
   onConfirm: () => void;
   onCancel: () => void;
+  hasError?: boolean;
 }) {
   return (
     <div
@@ -30,6 +32,11 @@ export default function ConfirmModal({
           className="text-body mb-8 grey-100 font-normal"
           dangerouslySetInnerHTML={{ __html: description }}
         />
+        {hasError && (
+          <p className="caption text-system-red mb-6">
+            오류가 발생했어요. 다시 시도해주세요
+          </p>
+        )}
         <div className="h-12 flex justify-end gap-2">
           <Button
             onClick={onCancel}
