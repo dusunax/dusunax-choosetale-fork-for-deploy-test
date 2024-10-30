@@ -25,8 +25,7 @@ export default function useSocialLogin() {
       const { loggin, isFirstLogin } = sessionWhenLoggin;
       if (loggin && !sidCookie) logoutHandler();
       if (loggin && sidCookie) {
-
-        if (!isFirstLogin) {
+        if (isFirstLogin) {
           router.push("/onboarding");
         } else {
           router.push("/game-list");
