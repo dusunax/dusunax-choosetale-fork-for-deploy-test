@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { type GameBuilderGame } from "@/interface/customType";
 import TextOverlayDiv from "@/components/common/TextOverlayDiv";
 import GameBuilderCard from "../../_components/GameBuilderCard";
@@ -19,12 +20,14 @@ export default function GameBuilderList({
   return (
     <div className="flex flex-col gap-4">
       {games.map((game) => (
-        <GameBuilderCard key={game.id} game={game}>
-          <>
-            <GameBuilderHeader game={game} />
-            <GameBuilderContent game={game} />
-          </>
-        </GameBuilderCard>
+        <Link href={`/my-page/game/${game.id}/result`} key={game.id}>
+          <GameBuilderCard>
+            <>
+              <GameBuilderHeader game={game} />
+              <GameBuilderContent game={game} />
+            </>
+          </GameBuilderCard>
+        </Link>
       ))}
     </div>
   );
