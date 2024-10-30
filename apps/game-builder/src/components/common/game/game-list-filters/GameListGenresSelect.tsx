@@ -38,13 +38,13 @@ export default function GameListGenresSelect({
     }
   }, [genre, handleFilterChange]);
 
-  const sortId = "genresSelect";
+  const genreId = "genresSelect";
 
   return (
     <>
-      <label htmlFor={sortId}>장르</label>
+      <label htmlFor={genreId}>장르</label>
       <GenresSelect
-        id={sortId}
+        id={genreId}
         name="genre"
         labelText=""
         control={control}

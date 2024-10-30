@@ -40,7 +40,7 @@ export default function useGameList({
 
     if (
       currentSearchParams.genre !== prevParams.current.genre ||
-      currentSearchParams.sort !== prevParams.current.sort
+      currentSearchParams.order !== prevParams.current.order
     ) {
       resetItems();
     }

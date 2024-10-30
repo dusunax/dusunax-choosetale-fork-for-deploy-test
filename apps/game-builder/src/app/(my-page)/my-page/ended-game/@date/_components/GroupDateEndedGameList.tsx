@@ -13,6 +13,7 @@ export default function GroupDateEndedGameList({
       {endedGame.map((game, index) => (
         <GroupDateEndedGameCard
           endedGame={game}
+          // eslint-disable-next-line react/no-array-index-key -- Using index as key because content with tab needs unique identifier more than gameId
           key={`${game.game.id}-${index}`}
         />
       ))}

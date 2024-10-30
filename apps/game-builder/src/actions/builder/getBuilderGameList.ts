@@ -9,14 +9,14 @@ export const getBuilderGameList = async ({
   page,
   limit,
   genre,
-  sort: order,
+  order,
   status,
 }: {
   status: BuilderStatus;
   page: number;
   limit: number;
   genre: Genres | "ALL";
-  sort: string;
+  order: string;
 }) => {
   const response = await api.get("/my-page/game-builder", {
     params: {

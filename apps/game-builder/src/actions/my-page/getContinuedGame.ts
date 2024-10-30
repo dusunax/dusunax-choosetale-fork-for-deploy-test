@@ -6,12 +6,12 @@ export const getContinuedGame = async ({
   page,
   limit,
   genre,
-  sort: order,
+  order,
 }: {
   page: number;
   limit: number;
   genre: string;
-  sort: string;
+  order: string;
 }) => {
   const response = await api.get("/my-page/continued-game", {
     params: {

@@ -4,31 +4,31 @@ import { type FormattedSearchParams } from "@/utils/formatGameListSearchParams";
 
 interface GameListSelectProps {
   searchParams: FormattedSearchParams;
-  handleSortChange: (newSort: string) => void;
+  handleOrderChange: (newOder: string) => void;
   option: GameListOption;
 }
 
-export default function GameListSort({
+export default function GameListOrder({
   searchParams,
-  handleSortChange,
+  handleOrderChange,
   option,
 }: GameListSelectProps) {
-  const defaultSort = searchParams.sort;
+  const defaultOrder = searchParams.order;
 
-  const sortId = "sortSelect";
-  const sorts = option.sorts.map((sort) => ({
-    value: sort.value,
-    optionLabel: sort.optionLabel,
+  const orderId = "orderSelect";
+  const orders = option.orders.map((e) => ({
+    value: e.value,
+    optionLabel: e.optionLabel,
   }));
 
   return (
     <select
-      id={sortId}
-      value={searchParams.sort || defaultSort}
-      onChange={(e) => handleSortChange(e.target.value)}
+      id={orderId}
+      value={searchParams.order || defaultOrder}
+      onChange={(e) => handleOrderChange(e.target.value)}
       className="bg-transparent body pl-2 pr-1 h-full"
     >
-      {sorts.map(({ value, optionLabel }) => (
+      {orders.map(({ value, optionLabel }) => (
         <option key={value} value={value}>
           {optionLabel}
         </option>

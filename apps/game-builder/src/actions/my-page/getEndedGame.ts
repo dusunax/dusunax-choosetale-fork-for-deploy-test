@@ -11,13 +11,13 @@ export const getEndedGame = async ({
   page,
   limit,
   genre,
-  sort: order,
+  order,
   group,
 }: {
   page: number;
   limit: number;
   genre: string;
-  sort: string;
+  order: string;
   group: Group;
 }) => {
   const groupApi = group === "game" ? "/group-game" : "";

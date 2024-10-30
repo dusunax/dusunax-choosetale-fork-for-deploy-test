@@ -9,7 +9,7 @@ export default async function ContinuedGame() {
     page: 1,
     limit: 8,
     genre: "ALL",
-    sort: "LATEST",
+    order: "LATEST",
   });
 
   return (

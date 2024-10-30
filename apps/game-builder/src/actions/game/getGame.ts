@@ -14,7 +14,6 @@ export const getGameInfoById = async (
   gameId: number
 ): Promise<ApiResponse<GetGameDataSuccessResponse>> => {
   try {
-    console.log("gameId", gameId);
     if (isNaN(gameId)) throw new Error("게임 아이디가 올바르지 않습니다.");
 
     const response = await api.get(`/game/${gameId}/data`, {

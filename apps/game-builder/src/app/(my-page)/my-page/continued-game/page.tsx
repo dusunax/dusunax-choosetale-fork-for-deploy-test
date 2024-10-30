@@ -28,7 +28,7 @@ export default async function Page({ searchParams }: GameListParams) {
         <GameListFilters
           searchParams={formattedSearchParams}
           option={{
-            sorts: [
+            orders: [
               {
                 value: "LATEST",
                 optionLabel: "최신순",

@@ -199,7 +199,7 @@ export interface GameListGame {
 
 export type GameList = GameListGame[];
 
-export type SortType = "POPULAR" | "LATEST" | "OLDEST";
+export type OrderType = "POPULAR" | "LATEST" | "OLDEST";
 
 export interface User {
   id: number;
@@ -278,5 +278,5 @@ export interface GameBuilderGame {
   }[];
 }
 export interface GameListOption {
-  sorts: { value: SortType; optionLabel: string }[];
+  orders: { value: OrderType; optionLabel: string }[];
 }
