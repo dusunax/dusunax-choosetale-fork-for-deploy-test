@@ -42,7 +42,7 @@ export default function TextInput({
           className={`w-full h-12 text-body text-white bg-transparent border-grey-600 focus:border-grey-400 border-solid border-[1px] rounded-md px-4 py-2 outline-none ${
             isError ? "!border-red-500 !focus:border-red-500 !text-red-500" : ""
           }`}
-          maxLength={maxCount}
+          maxLength={props.maxLength ?? maxCount}
         />
         <div className="flex items-center justify-between">
           <div>

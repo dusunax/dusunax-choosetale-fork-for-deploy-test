@@ -1,47 +1,47 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import { type User } from "@/interface/customType";
+import type {
+  FieldErrors,
+  UseFormClearErrors,
+  UseFormSetError,
+} from "react-hook-form";
+import type { User } from "@/interface/customType";
 import profilePlaceholder from "@asset/images/profile-placeholder.svg?url";
 import ChangeImageButtonIcon from "@asset/icons/change-image-button.svg";
+import type { EditUserValues } from "../_types/editUserValue";
 
-interface EditProfileImageProps {
+export default function EditProfileImage({
+  user,
+  onImageChange,
+  errors,
+  setError,
+  clearErrors,
+}: {
   user: User;
-}
-
-export default function EditProfileImage({ user }: EditProfileImageProps) {
+  onImageChange: (newImage: File) => void;
+  errors: FieldErrors<EditUserValues>;
+  setError: UseFormSetError<EditUserValues>;
+  clearErrors: UseFormClearErrors<EditUserValues>;
+}) {
   const [imageUrl, setImageUrl] = useState(
     user.profileImage.url ?? profilePlaceholder
   );
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file) return;
-
-    setIsLoading(true);
-    setError(null);
-
+    if (file === undefined) return;
     const newImageUrl = URL.createObjectURL(file);
 
-    const formData = new FormData();
-    formData.append("image", file);
-    try {
-      // await api.post("/api/upload-profile-image", {
-      //   headers: {
-      //     "Content-Type": "multipart/form-data",
-      //   },
-      //   data: formData,
-      // });
+    setIsLoading(true);
+    clearErrors("newImage");
 
+    try {
+      onImageChange(file);
       setImageUrl(newImageUrl);
     } catch (err) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError("An unknown error occurred");
-      }
+      setError("newImage", { message: "이미지 파일 변경 실패" });
     } finally {
       setIsLoading(false);
     }
@@ -66,7 +66,7 @@ export default function EditProfileImage({ user }: EditProfileImageProps) {
           <div
             className={`relative w-20 h-20 rounded-[1.125rem] overflow-hidden bg-grey-800 ${
               isLoading ? "animate-pulse" : ""
-            } ${error !== null ? "border-2 border-red-500" : ""}`}
+            } ${errors.newImage ? "border-2 border-red-500" : ""}`}
           >
             <Image
               src={imageUrl}
@@ -82,6 +82,7 @@ export default function EditProfileImage({ user }: EditProfileImageProps) {
           </div>
         </div>
       </button>
+
       <input
         id={inputId}
         type="file"

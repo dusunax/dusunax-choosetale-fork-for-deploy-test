@@ -1,7 +1,6 @@
 import "./styles.css";
 import "@repo/ui/styles.css";
 import type { Metadata } from "next";
-import Head from "next/head";
 import { Inter } from "next/font/google";
 import { Toaster } from "@/packages/ui/components/ui/Toaster";
 import CSSThemeProvider from "@/components/theme/ThemeProvider";

@@ -1,7 +1,6 @@
 import { me } from "@/actions/user/me";
 import TopNav from "../_components/TopNav";
-import EditProfileImage from "./_components/EditProfileImage";
-import EditNickname from "./_components/EditNickname";
+import EditUser from "./_components/EditUser";
 
 export default async function Page() {
   const user = await me();
@@ -9,8 +8,7 @@ export default async function Page() {
   return (
     <div className="h-full flex flex-col pb-20">
       <TopNav title="프로필 수정" hasBackButton page="/my-page" />
-      {user && <EditProfileImage user={user} />}
-      {user && <EditNickname />}
+      {user && <EditUser user={user} />}
     </div>
   );
 }
