@@ -238,6 +238,7 @@ export interface EndedGameGroupDate {
     genre: Genres;
     reachedEndingAt: string;
   };
+  ending: { playId: number };
 }
 
 export interface EndedGameGroupGame {

@@ -13,11 +13,10 @@ export default function GroupDateEndedGameCard({
   endedGame,
 }: EndedGameCardProps) {
   const { t } = useTranslation();
-  const TEMP_PLAY_ID = 1;
 
   return (
     <Link
-      href={`/game-play/${TEMP_PLAY_ID}/result?gameId=${endedGame.game.id}`}
+      href={`/game-play/${endedGame.ending.playId}/result?gameId=${endedGame.game.id}`}
     >
       <div className="flex flex-col gap-2">
         <div className="relative w-full pb-[100%] rounded-md overflow-hidden bg-grey-200">
