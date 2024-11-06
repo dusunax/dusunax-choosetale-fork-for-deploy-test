@@ -1,7 +1,6 @@
 "use server";
 import { revalidateTag } from "next/cache";
 import type { HttpError } from "@choosetale/nestia-type";
-import type { Genres as GenresType } from "@choosetale/nestia-type/lib/structures/Genres";
 import type { UpdateGameReqDto } from "@choosetale/nestia-type/lib/structures/UpdateGameReqDto";
 import api from "@/lib/axios/axios";
 import type { ApiResponse, SuccessResponse } from "../action";
@@ -11,7 +10,7 @@ interface UpdateSuccessResponse<>extends SuccessResponse {
 }
 
 export const updateGame = async (
-  formData: Omit<UpdateGameReqDto, "genre"> & { genre: GenresType | "ALL" },
+  formData: UpdateGameReqDto,
   gameId: number
 ): Promise<ApiResponse<UpdateSuccessResponse>> => {
   try {
