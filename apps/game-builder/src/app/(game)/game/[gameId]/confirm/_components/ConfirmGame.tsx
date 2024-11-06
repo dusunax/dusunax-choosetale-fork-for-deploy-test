@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import type { UpdateGameReqDto } from "@choosetale/nestia-type/lib/structures/UpdateGameReqDto";
+import { Genres } from "@choosetale/nestia-type/lib/structures/Genres";
 import type { GameInfo } from "@/interface/customType";
 import { updateGame } from "@/actions/game/updateGame";
 import { isValueEmpty } from "@/components/common/editor/contant";
@@ -40,7 +41,7 @@ export default function ConfirmGame({
     const payload: UpdateGameReqDto = {
       title,
       description,
-      genre,
+      genre: genre as Genres,
       isPrivate,
       thumbnailImageId,
     };
